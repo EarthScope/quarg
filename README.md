@@ -1,7 +1,7 @@
 # QuARG
 
 #### Questions or comments can be directed to the IRIS DMC Quality Assurance Group at <a href="mailto:dmc_qa@iris.washington.edu">dmc_qa@iris.washington.edu</a>.
-For detailed documentation, check out [iris-edu.github.io/quarg/](iris-edu.github.io/quarg/)  
+For detailed documentation, check out [iris-edu.github.io/quarg/](https://iris-edu.github.io/quarg/DOCUMENTATION.html)  
 <br />
 
 QuARG, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize IRIS’s database of [MUSTANG](http://service.iris.edu/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
@@ -136,7 +136,7 @@ or
 <br /> 
 
 ## More Information
-Detailed documentation can be found here:  [iris-edu.github.io/quarg/](iris-edu.github.io/quarg/)
+Detailed documentation can be found here:  [iris-edu.github.io/quarg/](https://iris-edu.github.io/quarg/DOCUMENTATION.html)
 
 Within QuARG, a simple overview of the program can be found in the "Help" tab. In addition, there is a file called DOCUMENTATION.html in the Documentation directory that has much more detailed information about using QuARG - the same information as iris-edu.github.io/quarg/ listed above - which can be accessed through the Help Tab within QuARG as well. 
 
