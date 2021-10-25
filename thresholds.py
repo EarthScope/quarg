@@ -1194,11 +1194,11 @@ def do_threshold(threshold, thresholdFile, metricDF, metaDF, outfile, instrument
                                     for index, row in chanMetaDF.iterrows():
                                         # The metadata dataframe will never have complex targets in it, so I need to allow for those
                                         complexTarget = "%s\.%s\..*%s.*\..*%s.*\.." % (row['network'], row['station'], row['location'], row['channel'])
-                                        starttime = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S')
+                                        starttime = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S.%f')
                                         if pd.isnull(row['endtime']):
                                             endtime = datetime.datetime.now()
                                         else:
-                                            endtime = datetime.datetime.strptime(row['endtime'], '%Y-%m-%dT%H:%M:%S')
+                                            endtime = datetime.datetime.strptime(row['endtime'], '%Y-%m-%dT%H:%M:%S.%f')
                                         thisSet = chanMetricDF[chanMetricDF['target'].str.contains(complexTarget,regex=True)]
 
                                         if 'new_target' in thisSet.columns:
