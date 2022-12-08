@@ -546,11 +546,11 @@ def sortMetaFile(issueDF, threshold):
     
     if len(issueDF) > 0:
         for ind, row in issueDF.iterrows():
-            start = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S').date()
+            start = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S.%f').date()
             if pd.isnull(row['endtime']):
                 end = datetime.datetime.now().date()
             else:
-                end = datetime.datetime.strptime(row['endtime'], '%Y-%m-%dT%H:%M:%S').date()
+                end = datetime.datetime.strptime(row['endtime'], '%Y-%m-%dT%H:%M:%S.%f').date()
                 
             Ndays =  len(pd.period_range(start, end, freq='D'))
             target = row['target'].strip()
