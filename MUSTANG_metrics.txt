@@ -14,6 +14,7 @@ event_end
 event_in_progress
 feed_latency
 glitches
+gsn_timing
 max_gap
 max_overlap
 max_range
@@ -47,6 +48,7 @@ transfer_function::gain_ratio
 transfer_function::phase_diff
 transfer_function::ms_coherence
 ts_channel_continuity
+ts_channel_gap_list
 ts_channel_up_time
 ts_gap_length
 ts_gap_length_total

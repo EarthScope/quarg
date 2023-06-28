@@ -100,6 +100,14 @@ conda create --name quarg -c conda-forge --file quarg-conda-install.txt
 conda activate quarg
 ```
 
+Alternate instructions for Apple Silicon M1 Mac:
+```
+cd quarg
+conda update conda
+CONDA_SUBDIR=osx-64 conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+conda activate quarg
+```
+
 See what is installed in our (quarg) environment with:
 
 ```
