@@ -4013,6 +4013,26 @@ class ExamineIssuesScreen(Screen):
                 startdate +"-"+ enddate
         webbrowser.open(goatURL)
 
+    def see_mda(self):
+        self.get_examine_inputs()
+        mdaURL = "http://ds.iris.edu/mda/"
+
+        if not self.network:
+            self.warning_popup("WARNING: Network code required for MDA")
+            return
+        if self.network:
+            mdaURL = f"{mdaURL}{self.network}"
+            if self.station:
+                mdaURL = f"{mdaURL}/{self.station}"
+                if self.location:
+                    mdaURL = f"{mdaURL}/{self.location}"
+                    if self.channel:
+                        mdaURL = f"{mdaURL}/{self.channel}"
+
+        
+        webbrowser.open(mdaURL)
+
+
     def see_events(self):
         self.get_examine_inputs()
         
