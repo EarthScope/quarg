@@ -83,7 +83,7 @@ Proceed to the [Miniconda](http://conda.pydata.org/miniconda.html) web site to f
 operating system before proceeding with the instructions below. If you can run ```conda``` from the command 
 line, then you know you have it successfully installed.
 
-By setting up a [conda virtual environment](https://conda.io/projects/conda/en/latest/user-guide/concepts.html#conda-environments), we assure that our 
+By setting up a [conda virtual environment](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html?highlight=environments), we assure that our 
 QuARG installation is entirely separate from any other installed software.
 
 
@@ -146,5 +146,5 @@ or
 ## More Information
 Detailed documentation can be found here:  [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)
 
-Within QuARG, a simple overview of the program can be found in the "Help" tab. In addition, there is a file called DOCUMENTATION.html in the Documentation directory that has much more detailed information about using QuARG - the same information as iris-edu.github.io/quarg/ listed above - which can be accessed through the Help Tab within QuARG as well. 
+Within QuARG, a simple overview of the program can be found in the "Help" tab. In addition, there is a file called DOCUMENTATION.html in the Documentation directory that has much more detailed information about using QuARG - the same information as EarthScope.github.io/quarg/ listed above - which can be accessed through the Help Tab within QuARG as well. 
 
