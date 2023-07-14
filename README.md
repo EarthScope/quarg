@@ -1,12 +1,12 @@
 # QuARG
 
-#### Questions or comments can be directed to the IRIS DMC Quality Assurance Group at <a href="mailto:dmc_qa@iris.washington.edu">dmc_qa@iris.washington.edu</a>.
-For detailed documentation, check out [iris-edu.github.io/quarg/](https://iris-edu.github.io/quarg/DOCUMENTATION.html)  
+#### Questions or comments can be directed to the EarthScope (formerly IRIS) Quality Assurance Group at <a href="mailto:dmc_qa@iris.washington.edu">dmc_qa@iris.washington.edu</a>.
+For detailed documentation, check out [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)  
 <br />
 
-**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize IRIS’s database of [MUSTANG](http://service.iris.edu/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
+**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize EarthScope’s database of [MUSTANG](http://service.iris.edu/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
 
-Over the years that IRIS has been producing Quality Assurance Reports,  we have refined the process of generating a report into four primary steps:
+Over the years that IRIS produced Quality Assurance Reports, we refined the process of generating a report into four primary steps:
 
 *	Find potential issues by utilizing MUSTANG metrics
 *	Examine all potential issues
@@ -20,7 +20,7 @@ Users have the ability to customize QuARG to adapt to their particular network. 
 
 * Add, edit, or remove Thresholds based on what best fits the network instrumentation.
 * Group instrumentation by Network, Station, Locations, or Channels, defining thresholds individually for each group. 
-* Use metric values sourced from either IRIS or a local ISPAQ database. Similarly, locally-sourced or IRIS-provided metadata.
+* Use metric values sourced from either EarthScope or a local ISPAQ database. Similarly, locally-sourced or EarthScope-provided metadata.
 * Create preference files to minimize the number of fields that users need to input, easily track what thresholds were used to find issues, and potentially create a series of files to be utilized for different use-cases within a network.  An example file preference_file_IRIS.py is provided in the base quarg directory. 
 * Use the built-in ticketing system or an external one, whichever works better for your workflow. 
 
@@ -28,18 +28,18 @@ This utility guides users through the process of generating a list of potential 
 
 An example report:
 <p align="center">
-<img src="https://github.com/iris-edu/quarg/blob/main/docs/figures/ExampleReport.png" width="500">
+<img src="https://github.com/EarthScope/quarg/blob/main/docs/figures/ExampleReport.png" width="500">
 </p>
 
 
-For more detailed documentation, see https://iris-edu.github.io/quarg/
+For more detailed documentation, see https://EarthScope.github.io/quarg/
 <br /> 
 
 # Installation
 
 QuARG can be installed on Linux and macOS.  
 
-QuARG is distributed through _GitHub_, via IRIS's public repository (_iris-edu_). You will use a ```git``` 
+QuARG is distributed through _GitHub_, via EarthScope's public repository (_EarthScope_). You will use a ```git``` 
 client command to get a copy of the latest stable release. In addition, you will use the ```miniconda``` 
 python package manager to create a customized Python environment designed to run QuARG properly.
 
@@ -61,7 +61,7 @@ After you have git installed, you will download the QuARG distribution into a di
 from GitHub by opening a text terminal and typing:
 
 ```
-git clone https://github.com/iris-edu/quarg.git
+git clone https://github.com/EarthScope/quarg.git
 ```
 
 This will produce a copy of this code distribution in the directory you have chosen. When new quarg versions 
@@ -144,7 +144,7 @@ or
 <br /> 
 
 ## More Information
-Detailed documentation can be found here:  [iris-edu.github.io/quarg/](https://iris-edu.github.io/quarg/DOCUMENTATION.html)
+Detailed documentation can be found here:  [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)
 
 Within QuARG, a simple overview of the program can be found in the "Help" tab. In addition, there is a file called DOCUMENTATION.html in the Documentation directory that has much more detailed information about using QuARG - the same information as iris-edu.github.io/quarg/ listed above - which can be accessed through the Help Tab within QuARG as well. 
 
