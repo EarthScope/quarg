@@ -100,7 +100,7 @@ conda create --name quarg -c conda-forge --file quarg-conda-install.txt
 conda activate quarg
 ```
 
-Alternate instructions for Apple Silicon M1 Mac:
+Alternate instructions for macOS with Apple M1 or M2 chip:
 ```
 cd quarg
 conda update conda
