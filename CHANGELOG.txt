@@ -19,3 +19,14 @@ Beta Version 0.0.2
 - Added popups with a list of all MUSTANG metrics and all defined thresholds in the Examine Issues screen
 - Popup if there is an error retrieving metrics during Find Issues
 - Changed definition of the 'dead' threshold to be dead_channel_gsn=1
+
+Version 1.0.0
+- Initial release
+
+Version 1.0.1
+- Updated metadata date parsing to handle updated IRIS station service millisecond output.
+- Change in formatting of GUI to prevent sizing issue seen in certain screen resolutions.
+
+Version 1.1.0
+- Remove reference to deprecated GOAT tool, replaced with MDA
+- Update to install instructions for Apple M1 and M2 chips. 
