@@ -83,7 +83,7 @@ Proceed to the [Miniconda](http://conda.pydata.org/miniconda.html) web site to f
 operating system before proceeding with the instructions below. If you can run ```conda``` from the command 
 line, then you know you have it successfully installed.
 
-By setting up a [conda virtual environment](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html?highlight=environments), we assure that our 
+By setting up a [conda virtual environment](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html), we assure that our 
 QuARG installation is entirely separate from any other installed software.
 
 
