@@ -87,12 +87,13 @@ By setting up a [conda virtual environment](https://docs.conda.io/projects/conda
 QuARG installation is entirely separate from any other installed software.
 
 
-### Creating the quarg environment for macOS or Linux
+### Creating the quarg environment
 
 You will go into the quarg directory that you created with git, update miniconda, then create an 
 environment specially for QuARG. You have to ```activate``` the quarg environment whenever you 
 perform installs, updates, or run QuARG.
 
+Instructions for Linux or macOS (Intel chip)
 ```
 cd quarg
 conda update conda
@@ -100,7 +101,7 @@ conda create --name quarg -c conda-forge --file quarg-conda-install.txt
 conda activate quarg
 ```
 
-Alternate instructions for macOS with Apple M1 or M2 chip:
+Instructions for macOS (Apple M1 or M2 chip):
 ```
 cd quarg
 conda update conda
