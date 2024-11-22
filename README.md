@@ -1,6 +1,6 @@
 # QuARG
 
-#### Questions or comments can be directed to the EarthScope (formerly IRIS) Quality Assurance Group at <a href="mailto:dmc_qa@iris.washington.edu">dmc_qa@iris.washington.edu</a>.
+#### Questions or comments can be directed to the EarthScope (formerly IRIS) Quality Assurance Group at <a href="mailto:data-help@earthscope.org">data-help@earthscope.org</a>.
 For detailed documentation, check out [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)  
 <br />
 
