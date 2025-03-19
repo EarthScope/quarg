@@ -1,3 +1,6 @@
+Version 1.1.1
+- Update to use python 3.6.15
+
 Version 1.1.0
 - Remove reference to deprecated GOAT tool, replaced with MDA
 - Update to install instructions for Apple M1 and M2 chips. 
