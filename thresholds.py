@@ -151,17 +151,10 @@ def do_threshold(
                 dfToUse.rename(columns={col: col + "_" + chType1}, inplace=True)
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch2)]
-
-            #             horzAvg = tmpDF.groupby(['station','start']).mean()
-            print(f"TEMP: tmpDF.dtypes {tmpDF.dtypes}")
-            # Select only numeric columns (excluding grouping keys)
             numeric_cols = tmpDF.select_dtypes(include=[np.number]).columns
 
             # Group by and aggregate only on numeric columns
             horzAvg = tmpDF.groupby(["snl", "start"])[numeric_cols].mean().reset_index()
-            # horzAvg = (
-            #     tmpDF.groupby(["snl", "start"], as_index=False).mean().reset_index()
-            # )
 
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
@@ -210,20 +203,13 @@ def do_threshold(
                 dfToUse.rename(columns={col: col + "_" + chType2}, inplace=True)
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
-
-            print(f"TEMP: tmpDF.dtypes {tmpDF.dtypes}")
-            # Select only numeric columns (excluding grouping keys)
             numeric_cols = tmpDF.select_dtypes(include=[np.number]).columns
 
             # Group by and aggregate only on numeric columns
             horzAvg = tmpDF.groupby(["snl", "start"])[numeric_cols].mean().reset_index()
-            # horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
-            #             horzAvg = tmpDF.groupby(['station','start']).mean().reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
-                #                 if doAbs1:
-                #                     horzAvg[col] = horzAvg[col].abs()
                 horzAvg.rename(columns={col: col + chType1}, inplace=True)
 
             #             dfToUse = pd.merge(dfToUse, horzAvg, how='inner', on=['station','start'])
@@ -263,15 +249,10 @@ def do_threshold(
             # Create dataframe average of horizontals for metric 1
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
-
-            #             horzAvg = tmpDF.groupby(['station','start']).mean().reset_index()
-            print(f"TEMP: tmpDF.dtypes {tmpDF.dtypes}")
-            # Select only numeric columns (excluding grouping keys)
             numeric_cols = tmpDF.select_dtypes(include=[np.number]).columns
 
             # Group by and aggregate only on numeric columns
             horzAvg = tmpDF.groupby(["snl", "start"])[numeric_cols].mean().reset_index()
-            # horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
@@ -911,13 +892,9 @@ def do_threshold(
             except:
                 pass
 
-            print(f"TEMP: dfToUse.dtypes {dfToUse.dtypes}")
             # Select only numeric columns (excluding grouping keys)
             numeric_cols = dfToUse.select_dtypes(include=[np.number]).columns
-
-            # Group by and aggregate only on numeric columns
             dfToUse = dfToUse.groupby("target")[numeric_cols].mean().reset_index()
-            # dfToUse = dfToUse.groupby("target", as_index=False)[field].mean().round(1)
             dfToUse.rename(columns={field: "value"}, inplace=True)
             dfToUse["channel"] = [t.split(".")[3] for t in dfToUse["target"]]
             dfToUse["start"] = datetime.datetime.strptime(specified_start, "%Y-%m-%d")
