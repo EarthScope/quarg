@@ -1,1 +1,6 @@
+conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+conda activate quarg
 sudo apt-get install ffmpeg libsdl2-dev libavdevice-dev libavfilter-dev libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev
+pip install ffpyplayer
+pip install kivy
+pip install pygame
