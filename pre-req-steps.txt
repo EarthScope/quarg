@@ -1,0 +1,1 @@
+sudo apt-get install ffmpeg libsdl2-dev libavdevice-dev libavfilter-dev libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev
