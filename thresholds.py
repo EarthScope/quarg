@@ -624,7 +624,7 @@ def do_threshold(
                 else:
                     value = subDef.split()[2]
 
-            # If the threshold is only for horixontal or verticals, then subset it now:
+            # If the threshold is only for horizontal or verticals, then subset it now:
             if ch1 != "":
                 dfToUse = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
@@ -900,7 +900,7 @@ def do_threshold(
             dfToUse["start"] = datetime.datetime.strptime(specified_start, "%Y-%m-%d")
             dfToUse["end"] = datetime.datetime.strptime(specified_end, "%Y-%m-%d")
 
-            # If the threshold is only for horixontal or verticals, then subset it now:
+            # If the threshold is only for horizontal or verticals, then subset it now:
             if ch1 != "":
                 dfToUse = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
@@ -968,7 +968,7 @@ def do_threshold(
             dfToUse["start"] = datetime.datetime.strptime(specified_start, "%Y-%m-%d")
             dfToUse["end"] = datetime.datetime.strptime(specified_end, "%Y-%m-%d")
 
-            # If the threshold is only for horixontal or verticals, then subset it now:
+            # If the threshold is only for horizontal or verticals, then subset it now:
             if ch1 != "":
                 dfToUse = dfToUse[dfToUse["channel"].str.endswith(ch1)]
         except Exception as e:
