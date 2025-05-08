@@ -356,7 +356,7 @@ def do_threshold(
                     # dfToUse[sncl2] = dfToUse[sncl2].fillna(dfToUse[col])
                     dfToUse[sncl2] = dfToUse[sncl2].fillna(dfToUse[col])
                     # After all your column manipulations:
-                    dfToUse = dfToUse.infer_objects(copy=False)
+                    dfToUse = dfToUse.infer_objects()
 
                     dfToUse.drop([col], axis=1, inplace=True)
 
