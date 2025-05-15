@@ -26,6 +26,10 @@ print("QuARG version %s" % version)
 
 # TODO: Need to include MS Gothic.ttf when packaging the scripts
 
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 import kivy
 
 kivy.require("1.11.0")
@@ -2645,9 +2649,9 @@ class ThresholdsScreen(Screen):
         thresholds_screen.threshold_group_rv._layout_manager.select_node(0)
 
         ## Metric names
-        # Try to get a list of metrics from service.iris.edu, but if fails
+        # Try to get a list of metrics from service.earthscope.org, but if fails
         # then just use the old list.
-        URL = "http://service.iris.edu/mustang/metrics/1/query?output=xml&nodata=404"
+        URL = "http://service.earthscope.org/mustang/metrics/1/query?output=xml&nodata=404"
 
         try:
             metrics = list()
@@ -2662,7 +2666,7 @@ class ThresholdsScreen(Screen):
                             today = datetime.datetime.now()
                             yesterday = today - datetime.timedelta(days=1)
                             subURL = (
-                                "http://service.iris.edu/mustang/measurements/1/query?metric=transfer_function&format=text&timewindow=%s,%s&nodata=404"
+                                "http://service.earthscope.org/mustang/measurements/1/query?metric=transfer_function&format=text&timewindow=%s,%s&nodata=404"
                                 % (
                                     yesterday.strftime("%Y-%m-%d"),
                                     today.strftime("%Y-%m-%d"),
@@ -2701,7 +2705,7 @@ class ThresholdsScreen(Screen):
             print("ERROR: %s" % e)
 
         ## Do the same for the metadata fields
-        URL = "http://service.iris.edu/fdsnws/station/1/query?net=IU&sta=ANMO&loc=00&cha=BHZ&level=channel&format=text&includecomments=true&nodata=404"
+        URL = "http://service.earthscope.org/fdsnws/station/1/query?net=IU&sta=ANMO&loc=00&cha=BHZ&level=channel&format=text&includecomments=true&nodata=404"
 
         try:
             metadata = pd.read_csv(URL, nrows=1, sep="|").columns
@@ -4335,7 +4339,7 @@ class ExamineIssuesScreen(Screen):
             os.mkdir(image_dir)
 
         # Grab all of the pngs and save in the directory
-        imageURL = "http://service.iris.edu/irisws/timeseries/1/query?"
+        imageURL = "http://service.earthscope.org/irisws/timeseries/1/query?"
 
         if len(self.startday.split("T")) == 1:
             starttime = self.startday + "T00:00:00"
@@ -4420,7 +4424,7 @@ class ExamineIssuesScreen(Screen):
             return
 
         metricURL = (
-            "http://service.iris.edu/mustang/measurements/1/query?metric="
+            "http://service.earthscope.org/mustang/measurements/1/query?metric="
             + self.metrics
         )
 
@@ -4488,7 +4492,7 @@ class ExamineIssuesScreen(Screen):
                     + ".png"
                 )
                 metricURL = (
-                    "http://service.iris.edu/mustang/measurements/1/query?metric="
+                    "http://service.earthscope.org/mustang/measurements/1/query?metric="
                     + metric
                 )
 
@@ -4628,7 +4632,7 @@ class ExamineIssuesScreen(Screen):
 
     def see_pdfs(self):
         self.get_examine_inputs()
-        pdfURL = "http://service.iris.edu/mustang/noise-pdf-browser/1/gallery?"
+        pdfURL = "http://service.earthscope.org/mustang/noise-pdf-browser/1/gallery?"
 
         if self.network == "":
             self.warning_popup("WARNING: Network field required")
@@ -4659,7 +4663,9 @@ class ExamineIssuesScreen(Screen):
             self.warning_popup("WARNING: Network field required")
             return
 
-        spectURL = "http://service.iris.edu/mustang/noise-pdf-browser/1/spectrogram?"
+        spectURL = (
+            "http://service.earthscope.org/mustang/noise-pdf-browser/1/spectrogram?"
+        )
 
         if self.network:
             spectURL = spectURL + "&net=" + self.network
@@ -4705,7 +4711,7 @@ class ExamineIssuesScreen(Screen):
             return
 
         nmtURL = (
-            "http://service.iris.edu/mustang/noise-mode-timeseries/1/query?net="
+            "http://service.earthscope.org/mustang/noise-mode-timeseries/1/query?net="
             + self.network
             + "&sta="
             + self.station
@@ -4818,7 +4824,7 @@ class ExamineIssuesScreen(Screen):
             self.warning_popup("WARNING: Network field required")
             return
 
-        stationURL = "http://service.iris.edu/fdsnws/station/1/query?"
+        stationURL = "http://service.earthscope.org/fdsnws/station/1/query?"
 
         if self.network:
             stationURL = stationURL + "net=" + self.network
