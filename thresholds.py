@@ -1436,7 +1436,8 @@ def do_threshold(
                                     )
 
                                 cols = chanMetricDF.columns
-                                finalDF = pd.DataFrame(columns=cols)
+                                # finalDF = pd.DataFrame(columns=cols)
+                                frames = []
 
                                 if chanMetricDF.empty or chanMetaDF.empty:
                                     continue
@@ -1476,7 +1477,9 @@ def do_threshold(
                                             thisSet = thisSet[thisSet["end"] <= endtime]
                                         ## GET DATES FROM ROW AND SUBSET THISSET TO ONLY THOSE BETWEEN THOSE DATES!
                                         ## ALSO HANDLE THE CASE WHERE IT IS ONLY METADATA AND NO METRICS ARE EXPECTED... ADD IN AN IF CLAUSE?
-                                        finalDF = pd.concat([finalDF, thisSet])
+                                        # finalDF = pd.concat([finalDF, thisSet])
+                                        frames.append(thisSet)
+                                finalDF = pd.concat(frames, ignore_index=True)
                                 finalDF = finalDF.drop_duplicates(
                                     subset=["target", "start", "end"]
                                 )
