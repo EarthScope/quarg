@@ -68,7 +68,6 @@ from kivy.graphics import Color, Rectangle
 
 import os
 import datetime
-import time
 import shutil  # used to remove directories
 import webbrowser
 import pandas as pd
@@ -772,7 +771,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["networks"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["networks"].str.match(r",\*,")
+                        ]
                     )
             subsettedTickets = tmpTickets.copy()
 
@@ -790,7 +791,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["stations"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["stations"].str.match(r",\*,")
+                        ]
                     )
             subsettedTickets = tmpTickets.copy()
 
@@ -809,7 +812,7 @@ class MainScreen(Screen):
                     )
                     tmpTickets = tmpTickets.append(
                         subsettedTickets[
-                            subsettedTickets["locations"].str.match(",\*,")
+                            subsettedTickets["locations"].str.match(r",\*,")
                         ]
                     )
             subsettedTickets = tmpTickets.copy()
@@ -828,7 +831,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["channels"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["channels"].str.match(r",\*,")
+                        ]
                     )
 
             subsettedTickets = tmpTickets.copy()
@@ -994,7 +999,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["networks"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["networks"].str.match(r",\*,")
+                        ]
                     )
             subsettedTickets = tmpTickets.copy()
 
@@ -1012,7 +1019,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["stations"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["stations"].str.match(r",\*,")
+                        ]
                     )
             subsettedTickets = tmpTickets.copy()
 
@@ -1031,7 +1040,7 @@ class MainScreen(Screen):
                     )
                     tmpTickets = tmpTickets.append(
                         subsettedTickets[
-                            subsettedTickets["locations"].str.match(",\*,")
+                            subsettedTickets["locations"].str.match(r",\*,")
                         ]
                     )
             subsettedTickets = tmpTickets.copy()
@@ -1050,7 +1059,9 @@ class MainScreen(Screen):
                         ]
                     )
                     tmpTickets = tmpTickets.append(
-                        subsettedTickets[subsettedTickets["channels"].str.match(",\*,")]
+                        subsettedTickets[
+                            subsettedTickets["channels"].str.match(r",\*,")
+                        ]
                     )
 
             subsettedTickets = tmpTickets.copy()
