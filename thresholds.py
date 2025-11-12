@@ -1193,7 +1193,7 @@ def do_threshold(
                                                 cha2 = ".*"
 
                                             thisTarget = (
-                                                "%s\.%s\..*%s.*\..*%s.*\..*"
+                                                r"%s\.%s\..*%s.*\..*%s.*\..*"
                                                 % (net2, sta2, loc2, cha2)
                                             )
 
@@ -1229,7 +1229,7 @@ def do_threshold(
                                                 cha2 = ".*"
 
                                             thisTarget = (
-                                                ".*\.%s\..*%s.*\..*%s.*\..*"
+                                                r".*\.%s\..*%s.*\..*%s.*\..*"
                                                 % (sta2, loc2, cha2)
                                             )
                                             staMetricDF = staMetricDF[
@@ -1263,7 +1263,7 @@ def do_threshold(
                                                 cha2 = ".*"
 
                                             thisTarget = (
-                                                ".*\..*\..*%s.*\..*%s.*\..*"
+                                                r".*\..*\..*%s.*\..*%s.*\..*"
                                                 % (loc2, cha2)
                                             )  #
 
@@ -1299,7 +1299,7 @@ def do_threshold(
                                         for cha2 in specificSNCL["channel"]:
                                             if cha2 == "*" or cha2 == "%" or cha2 == "":
                                                 cha2 = ".*"
-                                            thisTarget = ".*\..*\..*\..*%s.*\..*" % (
+                                            thisTarget = r".*\..*\..*\..*%s.*\..*" % (
                                                 cha2
                                             )
                                             if hasMetrics:
@@ -1445,7 +1445,7 @@ def do_threshold(
                                     # the metadata dataframe is probably going to be shorter (of course, maybe not)
                                     for index, row in chanMetaDF.iterrows():
                                         # The metadata dataframe will never have complex targets in it, so I need to allow for those
-                                        complexTarget = "%s\.%s\..*%s.*\..*%s.*\.." % (
+                                        complexTarget = r"%s\.%s\..*%s.*\..*%s.*\.." % (
                                             row["network"],
                                             row["station"],
                                             row["location"],
