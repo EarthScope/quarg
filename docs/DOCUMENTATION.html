@@ -371,7 +371,7 @@ summary {
 <div id="questions-or-comments-can-be-directed-to-the-iris-dmc-quality-assurance-group-at-dmc_qairis.washington.edu." class="section level4">
 <h4>Questions or comments can be directed to the IRIS DMC Quality Assurance Group at <a href="mailto:dmc_qa@iris.washington.edu">dmc_qa@iris.washington.edu</a>.</h4>
 <p><br /></p>
-<p>QuARG is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize IRIS’s database of <a href="http://service.iris.edu/mustang/">MUSTANG</a> data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems.</p>
+<p>QuARG is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize IRIS’s database of <a href="http://service.earthscope.org/mustang/">MUSTANG</a> data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems.</p>
 <p>Users have the ability to customize QuARG to adapt to their particular network. Some features that can be personalized:</p>
 <ul>
 <li>Add, edit, or remove Thresholds based on what best fits the network instrumentation.</li>
@@ -434,7 +434,7 @@ summary {
 <div id="background" class="section level1">
 <h1>Background</h1>
 <p><a href="#toc">Back to Table of Contents</a></p>
-<p><a href="http://www.iris.edu/hq/">IRIS</a> (Incorporated Research Institutions for Seismology) <a href="http://ds.iris.edu/ds/">DMC</a> (Data Management Center) has been performing quality assurance checks on data since the Transportable Array began in 2004. Since that time, we have expanded and improved our quality assurance efforts, including developing a comprehensive quality assurance system called MUSTANG with over 40 metrics available through our <a href="http://service.iris.edu/mustang/">webservices</a>.</p>
+<p><a href="http://www.iris.edu/hq/">IRIS</a> (Incorporated Research Institutions for Seismology) <a href="http://ds.iris.edu/ds/">DMC</a> (Data Management Center) has been performing quality assurance checks on data since the Transportable Array began in 2004. Since that time, we have expanded and improved our quality assurance efforts, including developing a comprehensive quality assurance system called MUSTANG with over 40 metrics available through our <a href="http://service.earthscope.org/mustang/">webservices</a>.</p>
 <p>In addition to the weekly QA performed on the TA network, we developed monthly quality assurance reports for the _GSN virtual network. Since then, we added a few more networks to our monthly and quarterly network reports as we refined our methods and improved the QuARG utility. We wrapped up our final network report in Summer 2019 with the goal of providing the QuARG utility to individual networks for the purpose of performing their own QA. While this tool was born at the DMC, intended for generating reports on very specific networks and leveraging tools that we have available in Seattle, the utility has since been expanded to be useful to network operators working on their own networks.</p>
 <p>Over the years, we have refined the process of generating a report into four primary steps:</p>
 <ul>
@@ -453,9 +453,9 @@ summary {
 “Metric” is a term that is used to describe <em>some</em> quality or aspect of the data. This can range from quite simple - say, the number of gaps in a day or the maximum value recorded in a day. It can also be more complex, such as taking the cross correlation of two channels at a station and recording the maximum correlation value. Metrics do not inherently tell us whether the data is “good” or “bad” - they simply tell us <em>something</em> about the data. It is up to us, as Network Operators or Researchers, to use those metrics to decide what data is good or and what data bad. And remember, what is “bad” for one purpose may be very “good” for another, and vice versa.<br />
 <br /> For both MUSTANG and ISPAQ, metrics are calculated for each N.S.L.C. target, and generally are calculated on a per-day basis. There are a few exceptions, such as the metrics that are based on the data from a window surrounding the start time of an earthquake.<br />
 <br /> The usage of the term “Metric” can get complicated and confusing. Generally, the term refers to a <em>concept</em> or <em>algorithm</em>, such as the metric “num_gaps”. A <em>value</em> is calculated for each metric-target-day. We tend to call these values “value” or “measurement”, hence accessing them via our measurements webservice. So IU.ANMO.01.BHZ has a sample_median value of 6241 counts for 2020-01-01 - here, the “metric” is sample_median and the “value” (or measurement) is 6241.<br />
-<br /> It is suggested that you familiarize yourself with the metrics that MUSTANG uses. A full list with a brief description can be found <a href="http://service.iris.edu/mustang/measurements/1/">here</a> - click on the red <code>Current list of all metrics</code> button to pull down the full list. Clicking on the <code>Detailed Documentation</code> button for any given metric will take you to a page that describes it more fully.</p></li>
+<br /> It is suggested that you familiarize yourself with the metrics that MUSTANG uses. A full list with a brief description can be found <a href="http://service.earthscope.org/mustang/measurements/1/">here</a> - click on the red <code>Current list of all metrics</code> button to pull down the full list. Clicking on the <code>Detailed Documentation</code> button for any given metric will take you to a page that describes it more fully.</p></li>
 <li><p><strong>Threshold</strong><br />
-Thresholds take a metric from a simple <em>description of the data</em> and moves it into a way to <em>determine if the data is “good”</em>. We use the term Threshold to mean a <code>Metric</code> plut a <code>Cutoff Value</code>… or, in many cases, a combination of metrics and cutoff values. For QuARG, we actually focus on the data that is <em>“bad”</em>, since Network Operators need to know where things are going wrong so that they can fix it. <br /> One thing to keep in mind is that different instrument types - broadband, short period, strong motion, etc - may have different cutoff values. For example, strong motion instruments have a very different noise profile than broadband instruments, and even a healthy strong motion instrument will have a significant portion of the noise profile that is above the New High Noise Model (Peterson, J, 1993, Observations and Modeling of Seismic Background Noise, U.S.G.S. OFR-93-322) . So thresholds using <a href="http://service.iris.edu/mustang/metrics/docs/1/desc/pct_above_nhnm/">pct_above_nhnm</a> probably ought to have different cutoff values if applied to strong motion and broadband.<br />
+Thresholds take a metric from a simple <em>description of the data</em> and moves it into a way to <em>determine if the data is “good”</em>. We use the term Threshold to mean a <code>Metric</code> plut a <code>Cutoff Value</code>… or, in many cases, a combination of metrics and cutoff values. For QuARG, we actually focus on the data that is <em>“bad”</em>, since Network Operators need to know where things are going wrong so that they can fix it. <br /> One thing to keep in mind is that different instrument types - broadband, short period, strong motion, etc - may have different cutoff values. For example, strong motion instruments have a very different noise profile than broadband instruments, and even a healthy strong motion instrument will have a significant portion of the noise profile that is above the New High Noise Model (Peterson, J, 1993, Observations and Modeling of Seismic Background Noise, U.S.G.S. OFR-93-322) . So thresholds using <a href="http://service.earthscope.org/mustang/metrics/docs/1/desc/pct_above_nhnm/">pct_above_nhnm</a> probably ought to have different cutoff values if applied to strong motion and broadband.<br />
 <br /> It should be noted that in QuARG, some Thresholds are based on metadata as well. This can help you find cases where the metadata may be incorrect or incomplete. <br /><br />
 Here are some examples of thresholds:<br />
 pct_above_nhnm &gt; 90 &amp;&amp; dead_channel_lin &gt; 2<br />
@@ -468,7 +468,7 @@ num_gaps / percent_availability &gt;= 12<br />
 <br /> IMPORTANT NOTE: The Thresholds, and particularly the cutoff values, that come with QuARG are ones that we have found <em>empirically</em> to balance between false positives and false negatives. They are not set in stone, and will very likely benefit from refinement based on your own network. We have made it so that you can edit, add, or remove thresholds based on your own needs.</p></li>
 <li><p><strong>MUSTANG</strong><br />
 MUSTANG is the Quality Assurance system that we have built at IRIS. It is essentially an entire workflow that ingests data from our archives and outputs a range of about 45 metrics. When data comes into the IRIS DMC, whether in realtime or latent, it triggers a series of steps that lead to metric calculation on that data. The UTC day after data is archived, MUSTANG will begin calculating metrics on the data. Note that archiving can be up to about a day after realtime data streams in, due to the way that the data is pooled prior to archiving.<br />
-<br /> We store the metrics we have calculated in a series of databases that are accessible to users through our <a href="http://service.iris.edu/mustang/">web services</a>. Most of the metrics are accessed through the <a href="http://service.iris.edu/mustang/measurements/1/">measurements service</a>, though there are also a handful of other services that are primarily related to PSDs and PDFs.<br />
+<br /> We store the metrics we have calculated in a series of databases that are accessible to users through our <a href="http://service.earthscope.org/mustang/">web services</a>. Most of the metrics are accessed through the <a href="http://service.earthscope.org/mustang/measurements/1/">measurements service</a>, though there are also a handful of other services that are primarily related to PSDs and PDFs.<br />
 <br /> If you are unfamiliar with our web services, in simple terms it is a way to input a specific URL into your webbrowser and have the requested metric values returned to you. Or, you can use your favorite language (python in the case of QuARG) to do the work for you.</p></li>
 <li><p><strong>ISPAQ</strong><br />
 Because MUSTANG is inherently built into the IRIS DMC, and we know that not all data streams into our archive, we have created a portable version of MUSTANG that users can install on their own computer to run metrics on their local data. This utility, <a href="https://github.com/iris-edu/ispaq">ISPAQ</a>, is a command line python tool that can write metrics to a file system or to a sqlite database (in ISPAQ 3.0, to be released soon). Those ISPAQ metrics that are written to a sqlite database can be accessed by QuARG by specifying the <code>Metric Source</code> from within the <code>Preference File Form</code>. This allows greater flexibility - networks can still use QuARG to find issues in their network even if the data does not get archived at the IRIS DMC and we do not have MUSTANG metrics for that data.</p></li>
@@ -902,7 +902,7 @@ IU|ADK|60|BHZ|51.8823|-176.6842|130.0|0.0|0.0|-90.0|Streckeisen STS-1VBB w/E300|
 <div id="thresholds_section" class="section level3">
 <h3>Thresholds File Editor</h3>
 <p><a href="#toc">Back to Table of Contents</a></p>
-<p>In many ways, Thresholds are the entire basis of of QuARG and these Quality Assurance (QA) Reports. They are a way to take pre-computed <a href="http://service.iris.edu/mustang/measurements/1/">MUSTANG</a> or <a href="https://github.com/iris-edu/ispaq">ISPAQ</a> metric values and use those metrics as a way to find potential issues in the data. The Thresholds File is what QuARG uses to keep track of Instrument Groups (see <code>Preference File Form</code>) and Threshold Groups, as well as actually defining the thresholds. To edit this file, you use the <code>Threshold Definitions Form</code>. This file is <code>thresholds.txt</code> and is necessary for QuARG to <code>Find Issues</code>, which creates the file that is used to <code>Examine Issues</code>.<br />
+<p>In many ways, Thresholds are the entire basis of of QuARG and these Quality Assurance (QA) Reports. They are a way to take pre-computed <a href="http://service.earthscope.org/mustang/measurements/1/">MUSTANG</a> or <a href="https://github.com/iris-edu/ispaq">ISPAQ</a> metric values and use those metrics as a way to find potential issues in the data. The Thresholds File is what QuARG uses to keep track of Instrument Groups (see <code>Preference File Form</code>) and Threshold Groups, as well as actually defining the thresholds. To edit this file, you use the <code>Threshold Definitions Form</code>. This file is <code>thresholds.txt</code> and is necessary for QuARG to <code>Find Issues</code>, which creates the file that is used to <code>Examine Issues</code>.<br />
 <br /></p>
 <p>In case you need a refresher, some defintions are listed <a href="#backgroundDefs">here</a></p>
 </div>
@@ -1041,7 +1041,7 @@ This is where you specify the field, operator, and cutoff value to be used. The 
 <li>Save</li>
 </ul>
 <p>In More Detail:</p>
-<p><em>Metadata List</em> This is a scrollable, selectable list of all metadata fields that can be used in QuARG. These are based on the IRIS <a href="http://service.iris.edu/fdsnws/station/1/">station service</a> headers at the channel level in the text format. When a field is selected, it will turn blue and will automatically fill in the <code>Field</code> in column 3. The metadata list is disabled by default, and only becomes available when the <code>Metadata</code> toggle button is selected (see below).</p>
+<p><em>Metadata List</em> This is a scrollable, selectable list of all metadata fields that can be used in QuARG. These are based on the IRIS <a href="http://service.earthscope.org/fdsnws/station/1/">station service</a> headers at the channel level in the text format. When a field is selected, it will turn blue and will automatically fill in the <code>Field</code> in column 3. The metadata list is disabled by default, and only becomes available when the <code>Metadata</code> toggle button is selected (see below).</p>
 <p><em>Threshold Options</em><br />
 There are five options available:</p>
 <table>
@@ -1404,11 +1404,11 @@ There are a variety of reasons why you may want to have more than one definition
 <td>Databrowser is a tool that allows users to plot MUSTANG metrics. These include Metric Timeseries (plotting metric values over time), Gap Duration plots, Network and Station boxplots, as well as some other options. It can be useful in looking at a network’s overall health, or to quickly view patterns in metric values over long periods of time. The <code>Databrowser</code> button does not require any of the Input fields to be filled.</td>
 </tr>
 <tr class="even">
-<td><a href="http://service.iris.edu/irisws/timeseriesplot/1/">Waveforms</a></td>
+<td><a href="http://service.earthscope.org/irisws/timeseriesplot/1/">Waveforms</a></td>
 <td>This button will retreive and display waveform data from the IRIS timeseriesplot service. This requires all target fields to be specified, though it can accomodate a comma-separated list. Users must be careful with the requested <code>Start</code> and <code>End</code> times, as the service limits the length of time that can be plotted. Note: this returns a static image and is not recommended to be the primary way of viewing waveforms - we expect the analyst to use another more dynamic tool to view waveforms, this is simply for use as a quick view of the data.</td>
 </tr>
 <tr class="odd">
-<td><a href="http://service.iris.edu/mustang/measurements/1/">Metrics</a></td>
+<td><a href="http://service.earthscope.org/mustang/measurements/1/">Metrics</a></td>
 <td>The <code>Metrics</code> button opens a web browser page that displays metric values from the MUSTANG Measurements web service. It uses input from all of the input fields except for <code>Threshold</code>. <code>Start</code> and <code>End</code> are used to limit the time range for the metrics retrieved; <code>Metrics</code> can be a comma-separated list of any desired metrics; <code>Network</code>, <code>Station</code>, <code>Location</code>, and <code>Channel</code> can all be wildcarded, lists, or left blank. Be careful of leaving fields blank, particularly <code>Network</code>, as that can create a very large query.</td>
 </tr>
 <tr class="even">
@@ -1416,15 +1416,15 @@ There are a variety of reasons why you may want to have more than one definition
 <td>The <code>Metric Plot</code> button uses the same inputs as the <code>Metrics</code> button, but rather than opening a web page with tabular data, it generates a simple timeseries plot of the requested values.</td>
 </tr>
 <tr class="odd">
-<td><a href="http://service.iris.edu/mustang/noise-pdf-browser/1/">PDFs</a></td>
+<td><a href="http://service.earthscope.org/mustang/noise-pdf-browser/1/">PDFs</a></td>
 <td>Opens a webpage with monthly PDFs for the requested targets, beginning with the month of <code>Start</code>.</td>
 </tr>
 <tr class="even">
-<td><a href="http://service.iris.edu/mustang/noise-pdf-browser/1/">Spectrograms</a></td>
+<td><a href="http://service.earthscope.org/mustang/noise-pdf-browser/1/">Spectrograms</a></td>
 <td>Opens a webpage with the spectorams for the requested targets, for the time span of <code>Start</code> to <code>End</code>. If no dates are provided, will do for the entire span of the targets (from the beginning of the earliest target until the end of the latest target).</td>
 </tr>
 <tr class="odd">
-<td><a href="service.iris.edu/mustang/noise-mode-timeseries/1/">Noise Modes</a></td>
+<td><a href="service.earthscope.org/mustang/noise-mode-timeseries/1/">Noise Modes</a></td>
 <td>Opens a webpage to the Noise Mode Timeseries plot. All <code>Network</code>, <code>Station</code>, <code>Location</code>, and <code>Channel</code> fields must be filled, with only one target allowed (ie, no wildcarding or lists). Will use the <code>Start</code> and <code>End</code> dates.</td>
 </tr>
 <tr class="even">
@@ -1436,7 +1436,7 @@ There are a variety of reasons why you may want to have more than one definition
 <td>Opens a webpage of the USGS event service based on the <code>Start</code> and <code>End</code> dates specified. It will list all earthquakes M5.5 and larger, as MUSTANG event-based metrics do not calculate on smaller events.</td>
 </tr>
 <tr class="even">
-<td><a href="http://service.iris.edu/fdsnws/station/1/">Station</a></td>
+<td><a href="http://service.earthscope.org/fdsnws/station/1/">Station</a></td>
 <td>Opens a channel-level web page of the IRIS Station service, using provided target information. Any blank field will be wildcarded, and lists and wildcards are allowed; start and end times are ignored for this diagnosis tool.</td>
 </tr>
 </tbody>
@@ -1968,7 +1968,7 @@ At the bottom right, you’ll notice a checkbox indicating whether you used the 
 <pre><code>id,tracker,target,start_date,category,subject,thresholds,images,caption,links,status,end_date,description</code></pre>
 <p>The lines that come after that follow that pattern, with quotation marks (‘&quot;’) around any fields that may have a comma in them. For example:</p>
 <pre><code>id,tracker,target,start_date,category,subject,thresholds,images,caption,links,status,end_date,description
-4,Support,UU BEI 01 EHZ,2019-12-01,Other,Example Ticket,&quot;gapsRatioGt12, glitch&quot;,/Users/laura/QA_reports/testImage.jpg,&quot;This is a figure caption, with a comma so it has quotation marks&quot;,http://service.iris.edu/mustang/measurements/1/query?metric=percent_availability&amp;net=YO&amp;cha=?XH&amp;format=text&amp;nodata=404&amp;orderby=start_asc,In Progress,2019-12-03,&quot;This one has a start and end date, and a link!&quot;</code></pre>
+4,Support,UU BEI 01 EHZ,2019-12-01,Other,Example Ticket,&quot;gapsRatioGt12, glitch&quot;,/Users/laura/QA_reports/testImage.jpg,&quot;This is a figure caption, with a comma so it has quotation marks&quot;,http://service.earthscope.org/mustang/measurements/1/query?metric=percent_availability&amp;net=YO&amp;cha=?XH&amp;format=text&amp;nodata=404&amp;orderby=start_asc,In Progress,2019-12-03,&quot;This one has a start and end date, and a link!&quot;</code></pre>
 <p>The most important thing is that the ticketing system used either has these fields, or has an equivalent, and that the tickets can be exported into a csv file of this format. Any missing fields can be left blank if necessary. For example, using a Redmine ticketing system, we are able to use the ‘Export to CSV’ function and choose what columns are exported. It may take an intermediate step to convert the CSV into the correct format, in which case it is probably worth setting up a workflow to do the conversion for you. Depending on the complexity, it <em>might</em> be worth delving into the code to change the required format - just be wary of doing that: it may create unintended consequences.<br />
 <br /></p>
 </div>

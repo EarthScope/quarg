@@ -214,7 +214,7 @@ def getMetrics(
     if metricSource.upper() == "IRIS":
 
         URL = (
-            "http://service.iris.edu/mustang/measurements/1/query?metric="
+            "http://service.earthscope.org/mustang/measurements/1/query?metric="
             + metric
             + "&net="
             + nets
@@ -571,7 +571,7 @@ def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
     if metadataSource.upper() == "IRIS":
 
         URL = (
-            "http://service.iris.edu/fdsnws/station/1/query?net="
+            "http://service.earthscope.org/fdsnws/station/1/query?net="
             + nets
             + "&sta="
             + stas
