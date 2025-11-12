@@ -21,6 +21,8 @@
 """
 
 import pandas as pd
+
+pd.set_option("future.no_silent_downcasting", True)
 import reportUtils
 import datetime
 import os
@@ -353,7 +355,9 @@ def do_threshold(
                 dfToUse[sncl2] = dfToUse[theseCols[0]]
 
                 for col in theseCols:
-                    dfToUse[sncl2] = dfToUse[sncl2].fillna(dfToUse[col])
+                    dfToUse[sncl2] = (
+                        dfToUse[sncl2].fillna(dfToUse[col]).infer_objects(copy=False)
+                    )
                     dfToUse.drop([col], axis=1, inplace=True)
 
             dfToUse.dropna(subset=["target"], inplace=True)
