@@ -865,7 +865,9 @@ class MainScreen(Screen):
         NewTicketScreen.go_to_newTicketsScreen(NewTicketScreen)
 
     def generate_csv(self):
+        print(f"TEMP: generating csv")
         self.get_generate_inputs()
+        print(f"TEMP: got inputs")
 
         if self.csv == "":
             self.warning_popup("WARNING: CSV File required")
@@ -878,7 +880,7 @@ class MainScreen(Screen):
         with open(self.preference) as f:
             local_dict = locals()
             exec(compile(f.read(), self.preference, "exec"), globals(), local_dict)
-
+        print(f"TEMP: got local_dict - {local_dict}")
         try:
             if not self.generate_start == "":
                 datetime.datetime.strptime(self.generate_start, "%Y-%m-%d")
@@ -972,6 +974,7 @@ class MainScreen(Screen):
         try:
             # convert any cases of BH[EHZ] (for example) to lists
             for ind, row in allTickets.iterrows():
+                print(f"TEMP: row from allTickets: {row}")
 
                 # network(s)
                 networks = reportUtils.expandCodes(row["network"])
@@ -992,86 +995,81 @@ class MainScreen(Screen):
             # Now start subsetting
             subsettedTickets = pd.DataFrame(columns=allTickets.columns)
 
-            tmpTickets = pd.DataFrame()
+            frames_to_concat = []
             for net in self.generate_network.split(","):
-                if net == "" or net == "*" or net == "%" or net == "???":
-                    tmpTickets = tmpTickets.append(allTickets)
+                if net in ["", "*", "%", "???"]:
+                    frames_to_concat.append(allTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        allTickets[
-                            allTickets["networks"].str.contains(
-                                ",%s," % net.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["networks"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_all = allTickets[
+                        allTickets["networks"].str.contains(
+                            ",%s," % net.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_all)
 
-            tmpTickets = pd.DataFrame()
+                    filtered_subset = subsettedTickets[
+                        subsettedTickets["networks"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(filtered_subset)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            frames_to_concat = []
             for sta in self.generate_station.split(","):
-                if sta == "" or sta == "*" or sta == "%" or sta == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if sta in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["stations"].str.contains(
-                                ",%s," % sta.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["stations"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_stas = subsettedTickets[
+                        subsettedTickets["stations"].str.contains(
+                            ",%s," % sta.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_stas)
 
-            tmpTickets = pd.DataFrame()
+                    star_stas = subsettedTickets[
+                        subsettedTickets["stations"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_stas)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            frames_to_concat = []
             for loc in self.generate_location.split(","):
-                if loc == "" or loc == "*" or loc == "%" or loc == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if loc in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["locations"].str.contains(
-                                ",%s," % loc.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["locations"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_locs = subsettedTickets[
+                        subsettedTickets["locations"].str.contains(
+                            ",%s," % loc.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_locs)
 
-            tmpTickets = pd.DataFrame()
+                    star_locs = subsettedTickets[
+                        subsettedTickets["locations"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_locs)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            frames_to_concat = []
             for chan in self.generate_channel.split(","):
-                if chan == "" or chan == "*" or chan == "%" or chan == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if chan in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["channels"].str.contains(
-                                ",%s," % chan.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["channels"].str.match(r",\*,")
-                        ]
-                    )
+                    filtered_chans = subsettedTickets[
+                        subsettedTickets["channels"].str.contains(
+                            ",%s," % chan.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_chans)
 
-            subsettedTickets = tmpTickets.copy()
+                    star_chans = subsettedTickets[
+                        subsettedTickets["channels"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_chans)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
             subsettedTickets.drop_duplicates(inplace=True)
 
             try:
@@ -1215,24 +1213,22 @@ class MainScreen(Screen):
                             local_dict,
                         )
                     YYYYmmdd = "".join(local_dict["startday"].split("-"))
-                #                     self.startDate.text = local_dict["startday"]
                 except:
                     self.warning_popup(
                         "WARNING: Tried to get Start Date from Preference file(since it was left empty),\nbut failed to read Preference File"
                     )
                     return
+
+            print(f"TEMP: local_dict: {local_dict}")
             if not self.generate_network == "":
                 network = self.generate_network
             else:
                 network = local_dict["network"]
 
             # The network report should be put into the same directory as the csv file even if that differs from the preference)files
-            #             dirToUse = os.path.dirname(self.csv)
             dirToUse = self.directory
             print(dirToUse)
-            #             self.report_filename = dirToUse + '/' + local_dict['network'] +'_Netops_Report_' + month
             self.report_filename = network + "_Netops_Report_" + YYYYmmdd
-            #             self.zipDir = local_dict["directory"] + self.report_filename
             self.zipDir = dirToUse + "/" + self.report_filename
             self.report_fullPath = self.zipDir + "/" + self.report_filename + ".html"
 
