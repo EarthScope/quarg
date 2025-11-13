@@ -81,7 +81,6 @@ import subprocess
 import urllib.request
 import urllib.error
 import requests  # used for getting empty transfer_function returns
-
 import reportUtils
 
 Config.set("input", "mouse", "mouse,disable_multitouch")
@@ -262,7 +261,7 @@ class MainScreen(Screen):
 
         if not MainScreen.start:
             self.start = str(lastMonthStart)
-        if not MainLScreen.end:
+        if not MainScreen.end:
             self.end = str(first)
 
     def set_default_start(self):
@@ -742,7 +741,6 @@ class MainScreen(Screen):
         try:
             # convert any cases of BH[EHZ] (for example) to lists
             for ind, row in allTickets.iterrows():
-
                 # network(s)
                 networks = reportUtils.expandCodes(row["network"])
                 allTickets.at[ind, "networks"] = networks
@@ -762,86 +760,90 @@ class MainScreen(Screen):
             # Now start subsetting
             subsettedTickets = pd.DataFrame(columns=allTickets.columns)
 
-            tmpTickets = pd.DataFrame()
+            # Subset for networks
+            frames_to_concat = []  # list to hold all DataFrames to concatenate
+
             for net in masterDict["query_nets"].split(","):
-                if net == "" or net == "*" or net == "%" or net == "???":
-                    tmpTickets = tmpTickets.append(allTickets)
+                if net in ["", "*", "%", "???"]:
+                    frames_to_concat.append(allTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        allTickets[
-                            allTickets["networks"].str.contains(
-                                ",%s," % net.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["networks"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_all = allTickets[
+                        allTickets["networks"].str.contains(
+                            ",%s," % net.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_all)
 
-            tmpTickets = pd.DataFrame()
+                    filtered_subset = subsettedTickets[
+                        subsettedTickets["networks"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(filtered_subset)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            # Subset for stations
+            frames_to_concat = []
+
             for sta in masterDict["query_stas"].split(","):
-                if sta == "" or sta == "*" or sta == "%" or sta == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if sta in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["stations"].str.contains(
-                                ",%s," % sta.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["stations"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_stas = subsettedTickets[
+                        subsettedTickets["stations"].str.contains(
+                            ",%s," % sta.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_stas)
 
-            tmpTickets = pd.DataFrame()
+                    star_stas = subsettedTickets[
+                        subsettedTickets["stations"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_stas)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            # Subset for locations
+            frames_to_concat = []
+
             for loc in masterDict["query_locs"].split(","):
-                if loc == "" or loc == "*" or loc == "%" or loc == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if loc in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["locations"].str.contains(
-                                ",%s," % loc.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["locations"].str.match(r",\*,")
-                        ]
-                    )
-            subsettedTickets = tmpTickets.copy()
+                    filtered_locs = subsettedTickets[
+                        subsettedTickets["locations"].str.contains(
+                            ",%s," % loc.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_locs)
 
-            tmpTickets = pd.DataFrame()
+                    star_locs = subsettedTickets[
+                        subsettedTickets["locations"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_locs)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
+            # Subset for channels
+            frames_to_concat = []
+
             for chan in masterDict["query_chans"].split(","):
-                if chan == "" or chan == "*" or chan == "%" or chan == "???":
-                    tmpTickets = tmpTickets.append(subsettedTickets)
+                if chan in ["", "*", "%", "???"]:
+                    frames_to_concat.append(subsettedTickets)
                 else:
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["channels"].str.contains(
-                                ",%s," % chan.replace("?", ".?").replace("*", ".*")
-                            )
-                            == True
-                        ]
-                    )
-                    tmpTickets = tmpTickets.append(
-                        subsettedTickets[
-                            subsettedTickets["channels"].str.match(r",\*,")
-                        ]
-                    )
+                    filtered_chans = subsettedTickets[
+                        subsettedTickets["channels"].str.contains(
+                            ",%s," % chan.replace("?", ".?").replace("*", ".*")
+                        )
+                    ]
+                    frames_to_concat.append(filtered_chans)
 
-            subsettedTickets = tmpTickets.copy()
+                    star_chans = subsettedTickets[
+                        subsettedTickets["channels"].str.match(r",\*,")
+                    ]
+                    frames_to_concat.append(star_chans)
+
+            subsettedTickets = pd.concat(frames_to_concat, ignore_index=True)
+
             subsettedTickets.drop_duplicates(inplace=True)
 
             try:
@@ -856,7 +858,7 @@ class MainScreen(Screen):
                 except:
                     masterDict["tickets"] = ""
 
-        except:
+        except Exception as e:
             masterDict["tickets"] = ""
 
     def go_To_NewTickets(self, *kwargs):
@@ -2893,16 +2895,13 @@ class ThresholdsScreen(Screen):
         thresholdsDict = sorted(masterDict["thresholdsDict"].keys())
         displayList = []
         for thresholdName in thresholdsDict:
-            #             print(thresholdName)
             displayList.append(thresholdName)
-            #             f.write("<b>%s</b>    \t" % thresholdName);
             for instrumentGroup in masterDict["thresholdsDict"][thresholdName].keys():
 
                 defStr = " && ".join(
                     masterDict["thresholdsDict"][thresholdName][instrumentGroup]
                 )
 
-                #                 print("     %s - %s" % (instrumentGroup,defStr));
                 displayList.append("     %s - %s" % (instrumentGroup, defStr))
 
             displayList.append("")
@@ -3570,7 +3569,6 @@ class ThresholdsScreen(Screen):
 
                 except Exception as e:
                     pass
-            #                     print("WARNING: %s" % e)
 
             ensure_threshold()
             prevDef = get_existing_defintion()
@@ -3759,7 +3757,6 @@ class ThresholdsScreen(Screen):
 
                 except Exception as e:
                     pass
-            #                     print("WARNING: %s" % e)
 
             ensure_threshold()
             prevDef = get_existing_defintion()
@@ -4762,7 +4759,6 @@ class ExamineIssuesScreen(Screen):
             self.warning_popup(
                 "WARNING: Channel code required for GOAT (can be wildcarded)"
             )
-            #             print("Channel code required for GOAT (can be wildcarded)")
             return
         if not self.startday or not self.endday:
             self.warning_popup("WARNING: Start and End times required")
@@ -5280,16 +5276,13 @@ class ExamineIssuesScreen(Screen):
 
         displayList = []
         for thresholdName in thresholdsDict:
-            #             print(thresholdName)
             displayList.append(thresholdName)
-            #             f.write("<b>%s</b>    \t" % thresholdName);
             for instrumentGroup in masterDict["thresholdsDict"][thresholdName].keys():
 
                 defStr = " && ".join(
                     masterDict["thresholdsDict"][thresholdName][instrumentGroup]
                 )
 
-                #                 print("     %s - %s" % (instrumentGroup,defStr));
                 displayList.append("     %s - %s" % (instrumentGroup, defStr))
 
             displayList.append("")
@@ -5343,16 +5336,13 @@ class ExamineIssuesScreen(Screen):
 
         displayList = []
         for thresholdName in thresholdsDict:
-            #             print(thresholdName)
             displayList.append(thresholdName)
-            #             f.write("<b>%s</b>    \t" % thresholdName);
             for instrumentGroup in masterDict["thresholdsDict"][thresholdName].keys():
 
                 defStr = " && ".join(
                     masterDict["thresholdsDict"][thresholdName][instrumentGroup]
                 )
 
-                #                 print("     %s - %s" % (instrumentGroup,defStr));
                 displayList.append("     %s - %s" % (instrumentGroup, defStr))
 
             displayList.append("")
@@ -5779,15 +5769,12 @@ class NewTicketScreen(Screen):
             except Exception as e:
                 self.warning_popup("WARNING: Unable to open %s: %s" % (file, e))
 
-    #                 print("WARNING: Unable to open %s: %s" %(file, e))
-
     def remove_images(self, *kwargs):
         for file in self.selectedImages:
             try:
                 del masterDict["imageList"][file]
             except KeyError as e:
                 self.warning_popup("WARNING: File not found in list - %s" % e)
-            #                 print("WARNING: File not found in list - %s" % e)
 
             self.selectedImages = [v for v in self.selectedImages if v != file]
 
@@ -7007,6 +6994,7 @@ class SelectedTicketsScreen(Screen):
                 )
 
             self.theseTickets = masterDict["tickets"]
+
             self.theseTickets["target"] = (
                 self.theseTickets["network"]
                 + "."
@@ -7022,7 +7010,6 @@ class SelectedTicketsScreen(Screen):
             ).reset_index(drop=True)
 
             ticketList = list()
-
             for id, row in self.theseTickets.iterrows():
                 row_sub = [
                     str(row["id"]),
