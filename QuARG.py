@@ -86,6 +86,11 @@ import reportUtils
 
 Config.set("input", "mouse", "mouse,disable_multitouch")
 
+# Explicit adapters and converters for datetime
+sqlite3.register_adapter(datetime.datetime, lambda dt: dt.isoformat(" "))
+sqlite3.register_converter(
+    "timestamp", lambda s: datetime.datetime.fromisoformat(s.decode())
+)
 
 # PREFERENCE FILE TODOS #
 
@@ -6028,7 +6033,9 @@ class NewTicketScreen(Screen):
         :return: Connection object or None
         """
         try:
-            conn = sqlite3.connect(db_file)
+            conn = sqlite3.connect(
+                db_file, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES
+            )
             return conn
         except Error as e:
             print("WARNING: %s" % e)
@@ -6052,14 +6059,14 @@ class NewTicketScreen(Screen):
                                             location text NOT NULL,
                                             channel text NOT NULL,
                                             description text,
-                                            start_date datetime,
-                                            end_date datetime,
+                                            start_date TIMESTAMP,
+                                            end_date TIMESTAMP,
                                             status text NOT NULL,
                                             thresholds text NOT NULL,
                                             images text,
                                             caption text,
                                             links text,
-                                            updated datetime
+                                            updated TIMESTAMP
                                         ); """
 
         try:
