@@ -5186,8 +5186,8 @@ class ExamineIssuesScreen(Screen):
             print("No issues loaded yet")
             return
 
-        self.df["NOTES"].ix[indToChange] = self.notes
-        ExamineIssuesScreen.currentDF["NOTES"].ix[indToChange] = self.notes
+        self.df.loc[indToChange, "NOTES"] = self.notes
+        ExamineIssuesScreen.currentDF.loc[indToChange, "NOTES"] = self.notes
         self.update_data()
 
     def see_notes(self):
@@ -5195,7 +5195,7 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            currentNotes = self.currentDF.ix[indToChange]
+            currentNotes = self.currentDF.loc[indToChange]
         except:
             print("No issues loaded yet")
             return
@@ -5451,8 +5451,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "TODO"
-            self.currentDF["STATE"].ix[indToChange] = "TODO"
+            self.df.loc[indToChange, "STATE"] = "TODO"
+            self.currentDF.loc[indToChange, "STATE"] = "TODO"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5463,8 +5463,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "New"
-            self.currentDF["STATE"].ix[indToChange] = "New"
+            self.df.loc[indToChange, "STATE"] = "New"
+            self.currentDF.loc[indToChange, "STATE"] = "New"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5475,8 +5475,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "Closed"
-            self.currentDF["STATE"].ix[indToChange] = "Closed"
+            self.df.loc[indToChange, "STATE"] = "Closed"
+            self.currentDF.loc[indToChange, "STATE"] = "Closed"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5487,8 +5487,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "Existing"
-            self.currentDF["STATE"].ix[indToChange] = "Existing"
+            self.df.loc[indToChange, "STATE"] = "Existing"
+            self.currentDF.loc[indToChange, "STATE"] = "Existing"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5499,8 +5499,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "Support"
-            self.currentDF["STATE"].ix[indToChange] = "Support"
+            self.df.loc[indToChange, "STATE"] = "Support"
+            self.currentDF.loc[indToChange, "STATE"] = "Support"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5511,8 +5511,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "No Ticket"
-            self.currentDF["STATE"].ix[indToChange] = "No Ticket"
+            self.df.loc[indToChange, "STATE"] = "No Ticket"
+            self.currentDF.loc[indToChange, "STATE"] = "No Ticket"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5523,8 +5523,8 @@ class ExamineIssuesScreen(Screen):
             indToChange = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            self.df["STATE"].ix[indToChange] = "False Pos"
-            self.currentDF["STATE"].ix[indToChange] = "False Pos"
+            self.df.loc[indToChange, "STATE"] = "False Pos"
+            self.currentDF.loc[indToChange, "STATE"] = "False Pos"
             self.update_data()
         except:
             print("No issues loaded yet")
@@ -5538,10 +5538,10 @@ class ExamineIssuesScreen(Screen):
             selectedInd = list(
                 set(self.currentDF.iloc[self.selectionIndices].index.values.tolist())
             )
-            NewTicketScreen.targets = self.df["SNCL"].ix[selectedInd].values.tolist()
-            NewTicketScreen.descriptions = (
-                self.df["NOTES"].ix[selectedInd].values.tolist()
-            )
+            NewTicketScreen.targets = self.df.loc[selectedInd, "SNCL"].values.tolist()
+            NewTicketScreen.descriptions = self.df.loc[
+                selectedInd, "NOTES"
+            ].values.tolist()
         except:
             print("No issues loaded yet")
             NewTicketScreen.targets = []
