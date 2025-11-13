@@ -865,9 +865,7 @@ class MainScreen(Screen):
         NewTicketScreen.go_to_newTicketsScreen(NewTicketScreen)
 
     def generate_csv(self):
-        print(f"TEMP: generating csv")
         self.get_generate_inputs()
-        print(f"TEMP: got inputs")
 
         if self.csv == "":
             self.warning_popup("WARNING: CSV File required")
@@ -880,7 +878,6 @@ class MainScreen(Screen):
         with open(self.preference) as f:
             local_dict = locals()
             exec(compile(f.read(), self.preference, "exec"), globals(), local_dict)
-        print(f"TEMP: got local_dict - {local_dict}")
         try:
             if not self.generate_start == "":
                 datetime.datetime.strptime(self.generate_start, "%Y-%m-%d")
@@ -974,7 +971,6 @@ class MainScreen(Screen):
         try:
             # convert any cases of BH[EHZ] (for example) to lists
             for ind, row in allTickets.iterrows():
-                print(f"TEMP: row from allTickets: {row}")
 
                 # network(s)
                 networks = reportUtils.expandCodes(row["network"])
@@ -1219,7 +1215,6 @@ class MainScreen(Screen):
                     )
                     return
 
-            print(f"TEMP: local_dict: {local_dict}")
             if not self.generate_network == "":
                 network = self.generate_network
             else:
