@@ -5898,7 +5898,7 @@ class NewTicketScreen(Screen):
             if link.text not in self.selectedLinks:
                 self.selectedLinks.append(link.text)
         else:
-            self.selectedLinks = [v for v in self.selectedLinks if v != linkn.text]
+            self.selectedLinks = [v for v in self.selectedLinks if v != link.text]
 
     def remove_link(self, *kwargs):
         for file in self.selectedLinks:
@@ -6720,7 +6720,7 @@ class UpdateTicketScreen(Screen):
             if link.text not in self.selectedLinks:
                 self.selectedLinks.append(link.text)
         else:
-            self.selectedLinks = [v for v in self.selectedLinks if v != linkn.text]
+            self.selectedLinks = [v for v in self.selectedLinks if v != link.text]
 
     def remove_link(self, *kwargs):
         for file in self.selectedLinks:
