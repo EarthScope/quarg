@@ -167,12 +167,12 @@ def getArgs():
     inputs.add_argument(
         "--metricsource",
         required=False,
-        help='Where metrics should be found - "IRIS" or the path the to ISPAQ-generated sqlite database file.',
+        help='Where metrics should be found - "EarthScope" or the path the to ISPAQ-generated sqlite database file.',
     )
     inputs.add_argument(
         "--metadatasource",
         required=False,
-        help='Location to find metadata - "IRIS" or the path to the XML file',
+        help='Location to find metadata - "EarthScope" or the path to the XML file',
     )
     inputs.add_argument(
         "--metrics_file",
@@ -182,7 +182,7 @@ def getArgs():
     inputs.add_argument(
         "--metadata_file",
         required=False,
-        help="Full path to file containing list of IRIS station service metadata fields",
+        help="Full path to file containing list of EarthScope station service metadata fields",
     )
     inputs.add_argument(
         "--thresholds_file",
@@ -211,7 +211,7 @@ def getMetrics(
     # Where $metric is the current metric, and within it are the
     # values for that metric
 
-    if metricSource.upper() == "IRIS":
+    if metricSource.upper() == "EarthScope":
 
         URL = (
             "http://service.earthscope.org/mustang/measurements/1/query?metric="
@@ -563,12 +563,12 @@ def parse_XML(xml_file, df_cols):
 
 
 def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
-    # This goes to the IRIS station service and pulls back the metadata
+    # This goes to the EarthScope station service and pulls back the metadata
     # about all specified SNCLs - for all time.
 
     # TODO: change it so that it only looks for current metadata epochs?
 
-    if metadataSource.upper() == "IRIS":
+    if metadataSource.upper() == "EarthScope":
 
         URL = (
             "http://service.earthscope.org/fdsnws/station/1/query?net="
@@ -606,7 +606,9 @@ def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
             DF.columns = DF.columns.str.lower()
 
         except Exception as e:
-            print("Unable to retrieve metadata from IRIS Station Service - %s" % e)
+            print(
+                "Unable to retrieve metadata from EarthScope Station Service - %s" % e
+            )
             DF = pd.DataFrame()
     else:
         # Then use local response-level XML files that were used in ISPAQ
