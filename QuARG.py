@@ -4091,7 +4091,7 @@ class ThresholdsScreen(Screen):
                                     .strip()
                                     .split("[")[0]
                                 )
-                                if ~field3.isnumeric():
+                                if not field3.isnumeric():
                                     if field3 not in metricsInThresh:
                                         metricsInThresh.append(field3)
 
@@ -4102,8 +4102,8 @@ class ThresholdsScreen(Screen):
                 print(metricThreshDict, file=f)
 
             self.confirmation_popup()
-        except:
-            self.warning_popup("Error while saving Thresholds")
+        except Exception as e:
+            self.warning_popup("Error while saving Thresholds: {e}")
 
     def confirmation_popup(self):
         popupContent = BoxLayout(orientation="vertical", spacing=10)
@@ -6986,40 +6986,43 @@ class SelectedTicketsScreen(Screen):
 
             self.theseTickets = masterDict["tickets"]
 
-            self.theseTickets["target"] = (
-                self.theseTickets["network"]
-                + "."
-                + self.theseTickets["station"]
-                + "."
-                + self.theseTickets["location"]
-                + "."
-                + self.theseTickets["channel"]
-            )
+            if type(self.theseTickets) == str:
+                tickets_screen.ticket_list_rv.data = ""
+            else:
+                self.theseTickets["target"] = (
+                    self.theseTickets["network"]
+                    + "."
+                    + self.theseTickets["station"]
+                    + "."
+                    + self.theseTickets["location"]
+                    + "."
+                    + self.theseTickets["channel"]
+                )
 
-            self.theseTickets = self.theseTickets.sort_values(
-                by=[masterDict["ticket_order"]]
-            ).reset_index(drop=True)
+                self.theseTickets = self.theseTickets.sort_values(
+                    by=[masterDict["ticket_order"]]
+                ).reset_index(drop=True)
 
-            ticketList = list()
-            for id, row in self.theseTickets.iterrows():
-                row_sub = [
-                    str(row["id"]),
-                    row["target"],
-                    row["start_date"],
-                    row["end_date"],
-                    row["subject"],
-                    row["status"],
-                    row["tracker"],
-                    row["updated"],
-                ]
-                row_sub = [
-                    row_sub[y].ljust(spacing_dict[y])[0 : spacing_dict[y]]
-                    for y in range(len(row_sub))
-                ]
-                label = "  ".join(row_sub)
-                ticketList.append({"text": label})
+                ticketList = list()
+                for id, row in self.theseTickets.iterrows():
+                    row_sub = [
+                        str(row["id"]),
+                        row["target"],
+                        row["start_date"],
+                        row["end_date"],
+                        row["subject"],
+                        row["status"],
+                        row["tracker"],
+                        row["updated"],
+                    ]
+                    row_sub = [
+                        row_sub[y].ljust(spacing_dict[y])[0 : spacing_dict[y]]
+                        for y in range(len(row_sub))
+                    ]
+                    label = "  ".join(row_sub)
+                    ticketList.append({"text": label})
 
-            tickets_screen.ticket_list_rv.data = ticketList
+                tickets_screen.ticket_list_rv.data = ticketList
         except Exception as e:
             print("Warning: could not retrieve tickets - %s" % e)
             tickets_screen.ticket_list_rv.data = ""
