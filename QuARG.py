@@ -444,8 +444,6 @@ class MainScreen(Screen):
 
             self.find_file.text = os.path.basename(filename[0])
             self.examine_file.text = os.path.basename(filename[0])
-            #             self.find_file.text = filename[0]
-            #             self.examine_file.text = filename[0]
             ExamineIssuesScreen.issueFile = self.examine_file.text
         except Exception as e:
             self.warning_popup("WARNING: %s" % e)
@@ -467,7 +465,6 @@ class MainScreen(Screen):
             self.generate_directory.text = file_directory
 
             self.ids.csv_id.text = os.path.basename(filename[0])
-        #             self.ids.csv_id.text = filename[0]
         except Exception as e:
             self.warning_popup("WARNING: %s" % e)
         self.dismiss_popup()
@@ -609,14 +606,6 @@ class MainScreen(Screen):
             shutil.rmtree(self.zipDir)
         print("Previous copy removed, generating new Report")
         self.do_generate()
-
-    #### REMOVE IF NO ISSUES ARISE OUT OF ITS ABSENCE ###
-    #     def date_checked(self, option, value):
-    #         if value is True:
-    #             self.query_options.append(option)
-    #         else:
-    #             self.query_options = [v for v in self.query_options if v != option]
-    #####################################################
 
     def get_ticket_inputs(self, *kwargs):
         main_screen = screen_manager.get_screen("mainScreen")
@@ -1263,11 +1252,9 @@ class MainScreen(Screen):
                 return
 
             # The network report should be put into the same directory as the csv file even if that differs from the preference)files
-            #             dirToUse = os.path.dirname(self.csv)
             dirToUse = self.directory
 
             self.report_filename = network + "_Netops_Report_" + YYYYmmdd
-            #             self.zipDir = local_dict["directory"] + self.report_filename
             self.zipDir = dirToUse + "/" + self.report_filename
 
             self.report_fullPath = self.zipDir + "/" + self.report_filename + ".html"
@@ -1617,11 +1604,6 @@ Each of those tabs corresponds to a step in the process of creating your Quality
   fields. [See detailed documentation for the format.]
             """
 
-        #         if whichOne == 12:
-        #             helpText = '''
-        #
-        #             '''
-
         return helpText
 
     def open_detailed_documentation(self):
@@ -1949,12 +1931,6 @@ class PreferencesScreen(Screen):
             preferences_screen.metadata_browse_btn.disabled = False
 
     def go_to_thresholdGroups(self):
-        #         if not masterDict['preference_file'] == "":
-        #             try:
-        #                 masterDict['preference_groupsDict']
-        #             except:
-        #                 self.warning_popup("WARNING: Preference File has been selected but not loaded\n       Either load the file")
-
         ThresholdGroupsScreen.go_to_thresholdGroups(ThresholdGroupsScreen)
 
     def exit_confirmation(self, *kwargs):
@@ -2058,7 +2034,6 @@ class PreferencesScreen(Screen):
                     self.selected_instrumentGroups.append(masterDict["groupsDict"][x])
             except:
                 pass
-        #         self.selected_instrumentGroups = list(set([masterDict['groupsDict'][x] for x in self.instrument_selectionIndices]))
 
         self.selected_thresholdGroups = list(
             set(
@@ -2633,8 +2608,6 @@ class ThresholdsScreen(Screen):
         my_thresholds = [{"text": x} for x in masterDict["threshold_names"]]
         thresholds_screen.threshold_list_rv.data = my_thresholds
         thresholds_screen.threshold_list_rv._layout_manager.select_node(0)
-        #         selectable_nodes = thresholds_screen.threshold_list_rv.get_selectable_nodes()
-        #         thresholds_screen.threshold_list_rv.select_node(selectable_nodes[0])
 
         ## Threshold groups
         instrument_groups = list()
@@ -2807,7 +2780,6 @@ class ThresholdsScreen(Screen):
         additionContent.bind(minimum_height=additionContent.setter("height"))
 
         nameLabel = Label(text="Threshold Name: ", size_hint_x=0.66)
-        #         self.thresholdTextInput = TextInput(id='thresholdNameID')
         self.thresholdTextInput = TextInput()
 
         self.selectExistingThreshold = DropDown()
@@ -2959,7 +2931,6 @@ class ThresholdsScreen(Screen):
         col1.add_widget(Label(text="Channels: "))
         col1.add_widget(Label())
 
-        #         self.groupTextInput = TextInput(id='groupNameID')
         self.groupTextInput = TextInput()
         self.netTextInput = TextInput(write_tab=False)
         self.staTextInput = TextInput(write_tab=False)
@@ -3072,7 +3043,6 @@ class ThresholdsScreen(Screen):
         additionContent.bind(minimum_height=additionContent.setter("height"))
 
         nameLabel = Label(text="Group Name: ", size_hint_x=0.66)
-        #         self.thresholdGroupTextInput = TextInput(id='thresholdGroupID')
         self.thresholdGroupTextInput = TextInput()
 
         self.selectExistingThresholdGroup = DropDown()
@@ -3813,9 +3783,6 @@ class ThresholdsScreen(Screen):
                     )
                     return
 
-                #                 if chanToDo != "":
-                #                     metric = "%s[%s]" %(metric, chanToDo)
-
                 if chanToDo != "":
                     if len(indices) == 0:
                         metric = "%s[%s]" % (metric, chanToDo)
@@ -3910,7 +3877,6 @@ class ThresholdsScreen(Screen):
                     newPart = "abs(" + metric + ") :: compare"
                 else:
                     newPart = metric + " :: compare"
-        #                 newPart = metric + ' :: compare'
 
         # Everything else (ie, 'normal')
         else:
@@ -3970,7 +3936,6 @@ class ThresholdsScreen(Screen):
                 newPart = "abs(" + metric + ") "
             else:
                 newPart = metric + " "
-            #             newPart =  metric + " "
             if neq == "down":
                 newPart = (
                     newPart + "!"
@@ -4278,9 +4243,7 @@ class ExamineIssuesScreen(Screen):
         examine_screen.end_day.text = main_screen.endDate.text
 
     def get_examine_inputs(self):
-        #         if self.ids.examine_start_id.text:
         self.startday = self.ids.examine_start_id.text
-        #         if self.ids.examine_end_id.text:
         self.endday = self.ids.examine_end_id.text
         self.metrics = self.ids.metrics_id.text
         self.threshold = self.ids.threshold_id.text
@@ -4314,9 +4277,6 @@ class ExamineIssuesScreen(Screen):
             title="Confirm Exit", content=content, size_hint=(0.9, 0.9)
         )
         masterDict["_popup"].open()
-
-    #     def create_ticket(self):
-    #         pass
 
     def see_databrowser(self):
         webbrowser.open("http://www.iris.edu/mustang/databrowser/", new=2)
@@ -4373,7 +4333,6 @@ class ExamineIssuesScreen(Screen):
                         cha = cha.strip()
                         imageURL_cha = imageURL_loc + "&cha=" + cha
 
-                        # imageURL_complete = imageURL_cha + "&starttime=" + self.startday + "&endtime=" + self.endday + "&helicordermode=false&format=png"
                         imageURL_complete = (
                             imageURL_cha
                             + "&starttime="
@@ -5753,7 +5712,6 @@ class NewTicketScreen(Screen):
             if image.text not in self.selectedImages:
                 self.selectedImages.append(image.text)
                 self.captionLabel.text = masterDict["imageList"][self.selectedImages[0]]
-        #                 self.captionInput.text = masterDict['imageList'][self.selectedImages[0]]
 
         else:
             self.selectedImages = [v for v in self.selectedImages if v != image.text]
@@ -5832,8 +5790,6 @@ class NewTicketScreen(Screen):
         if len(masterDict["linkList"]) > 0:
             link_id = 0
             for row in masterDict["linkList"]:
-                #                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
-                #                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b = ToggleButton(
                     text=row,
                     size_hint_y=None,
@@ -5870,7 +5826,6 @@ class NewTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
 
         captionBox = BoxLayout(orientation="horizontal", size_hint_y=0.25)
-        #         self.linkInput = TextInput(text="", id='linkID')
         self.linkInput = TextInput(text="")
         self.linkInput.bind()
         captionBox.add_widget(self.linkInput)
@@ -6421,10 +6376,6 @@ class UpdateTicketScreen(Screen):
                 self.selectedThresholds.append(threshold)
 
     def return_to_ticketList(self):
-
-        # IF you want to return to the popup, then uncomment these (right now the popup does not update properly, so have it disabled)
-        #         masterDict["ticket_instance"].disabled = False  # reenables the button that had been clicked and disabled
-        #         masterDict["ticketList_popup"].open()
         self.clear_ticket_fields()
 
     def exit_confirmation(self):
@@ -6654,8 +6605,6 @@ class UpdateTicketScreen(Screen):
         if len(masterDict["linkList"]) > 0:
             link_id = 0
             for row in masterDict["linkList"]:
-                #                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
-                #                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b = ToggleButton(
                     text=row,
                     size_hint_y=None,
@@ -6667,7 +6616,7 @@ class UpdateTicketScreen(Screen):
 
                 image_layout.add_widget(b)
                 link_id += 1
-            #
+
             # The notes (in a box layout) go into a ScrollView
             scrl = ScrollView(size_hint_y=4)
             scrl.add_widget(image_layout)
@@ -6692,7 +6641,6 @@ class UpdateTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
 
         captionBox = BoxLayout(orientation="horizontal", size_hint_y=0.25)
-        #         self.linkInput = TextInput(text="", id='linkID')
         self.linkInput = TextInput(text="")
         self.linkInput.bind()
         captionBox.add_widget(self.linkInput)

@@ -35,14 +35,11 @@ start = args.start
 end = args.end
 
 
-# month = args.month
 zipDir = args.htmldir
 report_fullPath = args.html_file_path
 iShort = 0
 iBroad = 0
 iStrong = 0
-# global iFlag
-# iFlag = 0
 
 metricsFile = args.metrics_file
 thresholdFile = args.thresholds_file
@@ -107,20 +104,12 @@ if not os.path.isdir(zipDir):
 
 infile = csvfile
 print(infile)
-# infile = directory + 'issues.csv'
 if not os.path.isfile(infile):
     quit("Input csv file does not exist")
 
 
 summaryFile = report_fullPath + ".summary"
 detailFile = report_fullPath + ".detail"
-
-
-# date = datetime.datetime.strptime(month, '%Y%m').strftime('%B %Y')
-# author = "Laura Keyson"
-
-
-# os.chdir(directory)
 
 #########################
 # Define useful utilities
@@ -300,9 +289,6 @@ def printTicketDetails(
                 + " </i></b></a><br>\n"
             )
         f.write('\t      <font color="black">STATUS: ' + str(status) + "</font><br>\n")
-        # f.write("\t      <font color=\"red\">Diagnostics: </font>\n");
-        # f.write("\t      <font color=\"black\">"+ str(diagnostics) +"</font>\n");
-        # f.write("\t      <a href=\"#diag\">(what is this?)</a><br>\n");
         f.write('\t      <font color="green">Thresholds: </font>\n')
         f.write('\t      <font color="black">' + str(thresholds) + "</font>\n")
         f.write('\t      <a href="#thresh">(what is this?)</a><br>\n')
@@ -331,7 +317,6 @@ def printTicketDetails(
                 thisImage = images[image_number]
                 thisCaption = captions[image_number]
                 printTicketDetails.iFlag = 1
-                #                 imgfile = str(inum) + ".png";
                 imgfile = "%s_%s.png" % (inum, image_number)
 
                 try:
@@ -370,10 +355,7 @@ def closeHTML():
     with open(metricsFile, "r") as f:
         metricsList = f.read().splitlines()
 
-    #     nMetrics = len(metricsList)
     nCol = 4
-    #     metsPerCol = int(nMetrics / nCol)
-    #     print("Metrics: %s, Columns: %s, Metrics Per Column: %s" % (nMetrics, nCol, metsPerCol))
 
     # Wrap up the final report
     with open(report_fullPath, "a+") as f:
@@ -433,13 +415,10 @@ def closeHTML():
         )
         f.write("\t    </p>\n\n")
 
-        #         f.write("\t   <ul>\n");
-
         for thresholdName in sorted(thresholdsDict.keys()):
             f.write("<DL>")
             f.write("<DT><b>%s</b>" % thresholdName)
 
-            #             f.write("<b>%s</b>    \t" % thresholdName);
             for instrumentGroup in thresholdsDict[thresholdName].keys():
 
                 if instrumentGroup in instruments:
@@ -496,7 +475,6 @@ try:
     detailDF = detailDF.sort_values(by=["Status", "target"])
 
     for index, row in detailDF.iterrows():
-        # print(row['thresholds'])
 
         printTicketDetails(
             row["id"],

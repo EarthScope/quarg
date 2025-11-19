@@ -196,7 +196,6 @@ metadataDF = reportUtils.getMetadata(
 
 failedMetricsAll = list()
 failedThresholdsAll = list()
-# thresholdFile = './groupsTEST.txt'
 for thresholdGroup in thresholdGroups:
     print()
     print("Running %s Thresholds" % thresholdGroup)
@@ -214,11 +213,7 @@ for thresholdGroup in thresholdGroups:
     metadatas = [e for e in metadataList if e in allMetrics]
     metrics = [e for e in metricsList if e in allMetrics]
 
-    #     hasMetadata = False;
     hasMetrics = False
-    #     if len(metadatas) > 0:
-    #         print("This thresholds Group contains some metadata fields")
-    #         hasMetadata = True
     if len(metrics) > 0:
         hasMetrics = True
 
@@ -249,7 +244,6 @@ for thresholdGroup in thresholdGroups:
         if not failedMetric in failedMetricsAll:
             failedMetricsAll.append(failedMetric)
 
-    #     if hasMetrics == True and  not metricDF.empty:
     for threshold in thresholdsList:
         if not threshold in failedThresholds:
             thresholds.do_threshold(

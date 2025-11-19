@@ -110,8 +110,6 @@ def do_threshold(
         thresholdFile
     )
     metricList, metadataList = load_metric_and_metadata()
-    #     doRatio = 0
-    #     doAverage = 0
 
     pd.options.mode.chained_assignment = None
 
@@ -153,7 +151,6 @@ def do_threshold(
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch2)]
 
-            #             horzAvg = tmpDF.groupby(['station','start']).mean()
             horzAvg = (
                 tmpDF.groupby(["snl", "start"], as_index=False).mean().reset_index()
             )
@@ -161,16 +158,9 @@ def do_threshold(
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
-                #                 if doAbs2:
-                #                     horzAvg[col] = horzAvg[col].abs()
                 horzAvg.rename(columns={col: col + chType2}, inplace=True)
 
-            #             dfToUse = pd.merge(dfToUse, horzAvg, how='inner', on=['station','start'])
             dfToUse = pd.merge(dfToUse, horzAvg, how="inner", on=["snl", "start"])
-
-            #             if doAbs1:
-            #                 for col in dfToUse.columns[dfToUse.columns.str.endswith("_%s" % chType1)]:
-            #                     dfToUse[col] = dfToUse[col].abs()
 
             newTargets = list()
             for idx, row in dfToUse.iterrows():
@@ -189,7 +179,6 @@ def do_threshold(
                         if i in ch2
                     ]
                 )
-                #                 ch2Channels = unique(tmpDF['channel'].str.strip().str[-1])
                 newChannel = "%s/[%s]" % (splitTarget[3], ch2ThisSNL)
                 splitTarget[3] = newChannel
 
@@ -207,15 +196,11 @@ def do_threshold(
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
             horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
-            #             horzAvg = tmpDF.groupby(['station','start']).mean().reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
-                #                 if doAbs1:
-                #                     horzAvg[col] = horzAvg[col].abs()
                 horzAvg.rename(columns={col: col + chType1}, inplace=True)
 
-            #             dfToUse = pd.merge(dfToUse, horzAvg, how='inner', on=['station','start'])
             dfToUse = pd.merge(dfToUse, horzAvg, how="inner", on=["snl", "start"])
 
             newTargets = list()
@@ -235,7 +220,6 @@ def do_threshold(
                         if i in ch1
                     ]
                 )
-                #                 ch2Channels = unique(tmpDF['channel'].str.strip().str[-1])
                 newChannel = "%s[%s]/%s" % (
                     splitTarget[3][0:2],
                     ch1ThisSNL,
@@ -253,17 +237,13 @@ def do_threshold(
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
-            #             horzAvg = tmpDF.groupby(['station','start']).mean().reset_index()
             horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
-                #                 if doAbs2:
-                #                     horzAvg[col] = horzAvg[col].abs()
                 horzAvg.rename(columns={col: col + "_" + chType2}, inplace=True)
 
             dfToUse = pd.merge(dfToUse, horzAvg, how="inner", on=["snl", "start"])
-            #             dfToUse = pd.merge(dfToUse, horzAvg, how='inner', on=['station','start'])
 
             newTargets = list()
             for idx, row in dfToUse.iterrows():
@@ -282,7 +262,6 @@ def do_threshold(
                         if i in ch1
                     ]
                 )
-                #                 ch2Channels = unique(tmpDF['channel'].str.strip().str[-1])
                 newChannel = "%s[%s]" % (splitTarget[3][0:2], ch1ThisSNL)
                 splitTarget[3] = newChannel
 
@@ -380,15 +359,12 @@ def do_threshold(
                     )
                     newTargets.append("")
                     continue
-                #                 ch2Channels = unique(tmpDF['channel'].str.strip().str[-1])
                 newChannel = "%s/%s" % (splitTarget[3], ch1ThisSNL)
                 splitTarget[3] = newChannel
 
                 newTarget = ".".join(splitTarget)
                 newTargets.append(newTarget)
             dfToUse["new_target"] = newTargets
-
-        #             mergedDF.update(mergedDF[colList].merge(df2, 'left'))
 
         #### CASES WITHOUT VS OR AVG ####
         if chType1 == "" and chType2 == "":
@@ -426,8 +402,6 @@ def do_threshold(
                         oldChanList.append(tmpChanA)
                 ncDF = pd.DataFrame(newChanList, columns=["second_channel"])
                 ncDF["channel"] = oldChanList
-
-                #                 newChanDF = pd.concat([ncDF,pd.concat([newChanDF]*len(ch2)).set_index(ncDF.index)]).sort_index().ffill()
 
                 newChanDF = (
                     pd.merge(newChanDF, ncDF).drop_duplicates().reset_index(drop=True)
@@ -582,7 +556,6 @@ def do_threshold(
 
             field = subDef.split()[0].split("[")[0]
             try:
-                #                 ch1 = subDef.split()[0].split('[')[1].replace(']','').split(':')[0]     # Only Ratio and Comparison can have H: avg/vs
                 CH1 = subDef.split()[0].split("[")[1].replace("]", "")
                 ch1, ch2 = get_channel_lists(CH1, "")
 
@@ -745,16 +718,11 @@ def do_threshold(
                 dfToUse[met1] / dfToUse[met2]
             )  # Later we will whittle down to just the V or just the H, if necessary
 
-        #             dfToUse['ratio'] = dfToUse['ratio'].apply(lambda x: x*100)    # OLD
-
         else:
             # Do the figuring on what needs to happen to the dataframe based on chType1 and chyType2
             dfToUse = do_channel_figuring(
                 dfToUse, CH1, CH2, ch1, ch2, chType1, chType2, doAbs1, doAbs2
             )
-
-            # Subset based on the channel indicated by ch1:
-            #             dfToUse = dfToUse[dfToUse['channel'].str.endswith(ch1)]
 
             # create the ratio column:
             if chType1 == "vs" or chType2 == "vs":
@@ -789,13 +757,11 @@ def do_threshold(
                         if col.endswith("_sncl2"):
                             dfToUse.drop([col], axis=1, inplace=True)
                         elif col not in columnsToNotChange:
-                            #                             dfToUse.rename(columns={col : '_'.join(col.split("_")[:-1])})
                             dfToUse.rename(
                                 columns={col: col.rsplit("_", 1)[0]}, inplace=True
                             )
 
                 else:
-                    #                     if chType1 == chType2 == 'avg':
                     if doAbs1:
                         dfToUse[met1 + "_" + chType1] = dfToUse[
                             met1 + "_" + chType1
@@ -814,16 +780,12 @@ def do_threshold(
                         if col.endswith("_" + chType2):
                             dfToUse.drop([col], axis=1, inplace=True)
                         elif col not in columnsToNotChange:
-                            #                             dfToUse.rename(columns={col : '_'.join(col.split("_")[:-1])})
                             dfToUse.rename(
                                 columns={col: col.rsplit("_", 1)[0]}, inplace=True
                             )
-        #                 dfToUse['ratio'] = dfToUse['ratio'].apply(lambda x: x*100)    # OLD
 
         if ch1 != "":
             dfToUse = dfToUse[dfToUse["channel"].str.endswith(ch1)]
-
-        #             dfToUse = dfToUse[dfToUse['channel'].str.endswith(ch1)]
 
         #####
 
@@ -845,8 +807,6 @@ def do_threshold(
 
         return chanMetricDF, chanMetaDF, "ratio"
 
-    #         return dfToUse, fieldType, "ratio"
-
     def average_threshold(chanMetricDF, chanMetaDF, subDef):
         # Shouldn't have metadata in here, but keeping it open for future-proofing
         doAbs1 = 0
@@ -862,14 +822,8 @@ def do_threshold(
             value = float(fields[2])
 
             try:
-                #                 ch1 = fields[0].split('[')[1].replace(']','').split(':')[0]    # only Ratio and Comparison can have H: avg/vs
                 CH1 = fields[0].split("[")[1].replace("]", "")
                 ch1, ch2 = get_channel_lists(CH1, CH2)
-            #                 ch1 = chanTypes[CH1]
-            #                 if ch1 == 'V':
-            #                     ch1 = Vchans
-            #                 elif ch1 == 'H':
-            #                     ch1 = Hchans
             except:
                 ch1 = ""
 
@@ -917,8 +871,6 @@ def do_threshold(
 
         return chanMetricDF, chanMetaDF, "average"
 
-    #         return dfToUse, fieldType, "average"
-
     def median_threshold(chanMetricDF, chanMetaDF, subDef):
         # Shouldn't have metadata in here, but keeping it open for future-proofing
         doAbs1 = 0
@@ -934,10 +886,8 @@ def do_threshold(
             value = float(fields[2])
 
             try:
-                #                 ch1 = fields[0].split('[')[1].replace(']','').split(':')[0]    # Only Ratio and Comparison can have H: avg/vs
                 CH1 = fields[0].split("[")[1].replace("]", "")
                 ch1, ch2 = get_channel_lists(CH1, CH2)
-            #                 ch1 = chanTypes[CH1]
             except:
                 ch1 = ""
 
@@ -1112,11 +1062,6 @@ def do_threshold(
                             )
 
                 else:
-                    #                     if chType1 == chType2 == 'avg':
-                    #                         if doAbs1:
-                    #                             dfToUse[met1+ "_" + chType1] = dfToUse[met1+ "_" + chType1].abs()
-                    #                         if doAbs2:
-                    #                             dfToUse[met1+ "_" + chType2] = dfToUse[met1+ "_" + chType2].abs()
                     df1 = dfToUse[met1 + "_" + chType1]
                     df2 = dfToUse[met2 + "_" + chType2]
 
@@ -1139,8 +1084,6 @@ def do_threshold(
             chanMetaDF = dfToUse
 
         return chanMetricDF, chanMetaDF, "comparison"
-
-    #         return dfToUse, fieldType, "comparison"
 
     # Within a single threshold, there can be multiple instrument groups, so need to loop over each of those
     # But before we do, we need to do some organization to figure out what stations are specifically spelled
@@ -1404,7 +1347,6 @@ def do_threshold(
                                                     chanMetricDF, chanMetaDF, subDef
                                                 )
                                             )
-                                        #                                             quit("Stopping here to make sure it's working")
                                         else:
                                             chanMetricDF, chanMetaDF, itype = (
                                                 simple_threshold(
@@ -1439,7 +1381,6 @@ def do_threshold(
                                     )
 
                                 cols = chanMetricDF.columns
-                                # finalDF = pd.DataFrame(columns=cols)
                                 frames = []
 
                                 if chanMetricDF.empty or chanMetaDF.empty:
@@ -1471,7 +1412,6 @@ def do_threshold(
 
                                         if "new_target" in thisSet.columns:
                                             thisSet["target"] = thisSet["new_target"]
-                                        #                                             thisSet.drop('new_target', axis = 1, inplace = True)
 
                                         if not itype == "average":
                                             thisSet = thisSet[
@@ -1480,7 +1420,6 @@ def do_threshold(
                                             thisSet = thisSet[thisSet["end"] <= endtime]
                                         ## GET DATES FROM ROW AND SUBSET THISSET TO ONLY THOSE BETWEEN THOSE DATES!
                                         ## ALSO HANDLE THE CASE WHERE IT IS ONLY METADATA AND NO METRICS ARE EXPECTED... ADD IN AN IF CLAUSE?
-                                        # finalDF = pd.concat([finalDF, thisSet])
                                         frames.append(thisSet)
                                 finalDF = pd.concat(frames, ignore_index=True)
                                 finalDF = finalDF.drop_duplicates(
