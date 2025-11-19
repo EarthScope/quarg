@@ -203,6 +203,14 @@ def getArgs():
 # UTILITIES FOR GENERATING DATAFRAMES
 
 
+def return_no_metrics(response_code: int, metric: str, failedMetrics: list):
+    print("Unable to get metrics for %s - %s" % (metric, response_code))
+    if not metric in failedMetrics:
+        failedMetrics.append(metric)
+    DF = pd.DataFrame()
+    return DF, failedMetrics
+
+
 def getMetrics(
     nets, stas, locs, chans, start, end, metric, metricSource, failedMetrics
 ):
@@ -211,7 +219,7 @@ def getMetrics(
     # Where $metric is the current metric, and within it are the
     # values for that metric
 
-    if metricSource.upper() == "EarthScope":
+    if metricSource.upper() == "EARTHSCOPE":
 
         URL = (
             "http://service.earthscope.org/mustang/measurements/1/query?metric="
@@ -234,13 +242,27 @@ def getMetrics(
 
         try:
             response = requests.get(URL)
-            DF = pd.read_csv(StringIO(response.text), header=1)
+            if response.status_code != 200:
+                DF, failedMetrics = return_no_metrics(
+                    response_code=response.status_code,
+                    metric=metric,
+                    failedMetrics=failedMetrics,
+                )
+                # print(
+                #     "Unable to get metrics for %s - %s" % (metric, response.status_code)
+                # )
+                # if not metric in failedMetrics:
+                #     failedMetrics.append(metric)
+                # DF = pd.DataFrame()
+                # return DF, failedMetrics
+            else:
+                DF = pd.read_csv(StringIO(response.text), header=1)
 
-            if not "transfer_function" in metric:
-                DF.rename(columns={"value": metric}, inplace=True)
-                DF[metric] = DF[metric].map(float)
+                if not "transfer_function" in metric:
+                    DF.rename(columns={"value": metric}, inplace=True)
+                    DF[metric] = DF[metric].map(float)
 
-            DF.drop("lddate", axis=1, inplace=True)
+                DF.drop("lddate", axis=1, inplace=True)
         except Exception as e:
             print("Unable to get metrics for %s - %s" % (metric, e))
             if not metric in failedMetrics:
@@ -565,11 +587,27 @@ def parse_XML(xml_file, df_cols):
 def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
     # This goes to the EarthScope station service and pulls back the metadata
     # about all specified SNCLs - for all time.
+    df_cols = [
+        "Network",
+        "Station",
+        "Location",
+        "Channel",
+        "Latitude",
+        "Longitude",
+        "Elevation",
+        "Depth",
+        "Azimuth",
+        "Dip",
+        "Scale",
+        "ScaleFreq",
+        "ScaleUnits",
+        "SampleRate",
+        "StartTime",
+        "EndTime",
+    ]
 
     # TODO: change it so that it only looks for current metadata epochs?
-
-    if metadataSource.upper() == "EarthScope":
-
+    if metadataSource.upper() == "EARTHSCOPE":
         URL = (
             "http://service.earthscope.org/fdsnws/station/1/query?net="
             + nets
@@ -609,7 +647,11 @@ def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
             print(
                 "Unable to retrieve metadata from EarthScope Station Service - %s" % e
             )
-            DF = pd.DataFrame()
+            DF = pd.DataFrame(columns=df_cols)
+            DF["Target"] = DF[["Network", "Station", "Location", "Channel"]].apply(
+                lambda x: ".".join(x.map(str)), axis=1
+            )
+            DF.columns = DF.columns.str.lower()
     else:
         # Then use local response-level XML files that were used in ISPAQ
         if metadataSource is None:
@@ -632,24 +674,6 @@ def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
 
             else:
                 print("Will parse XML using %s" % metadataSource)
-                df_cols = [
-                    "Network",
-                    "Station",
-                    "Location",
-                    "Channel",
-                    "Latitude",
-                    "Longitude",
-                    "Elevation",
-                    "Depth",
-                    "Azimuth",
-                    "Dip",
-                    "Scale",
-                    "ScaleFreq",
-                    "ScaleUnits",
-                    "SampleRate",
-                    "StartTime",
-                    "EndTime",
-                ]
                 DF = parse_XML(metadataSource, df_cols)
 
             DF["Location"] = DF.Location.replace(np.nan, "", regex=True)

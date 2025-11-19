@@ -74,7 +74,7 @@ def get_threshold_metrics(thresholds, thresholdFile):
 
 def load_metric_and_metadata():
     metrics_file = "./MUSTANG_metrics.txt"
-    metadata_file = "./IRIS_metadata.txt"
+    metadata_file = "./EarthScope_metadata.txt"
 
     try:
         with open(metrics_file, "r") as f:
@@ -1153,7 +1153,6 @@ def do_threshold(
             return
 
     for group in threshDefs.keys():
-
         # loop over each group in the threshold, and run them if we have included them in the preference file
         if group in instruments:
             instDef = threshDefs[group]

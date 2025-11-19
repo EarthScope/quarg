@@ -7779,7 +7779,7 @@ masterDict["imageList"] = dict()
 masterDict["linkList"] = list()
 masterDict["thresholds_file"] = "./thresholds.txt"
 masterDict["metrics_file"] = "./MUSTANG_metrics.txt"
-masterDict["metadata_file"] = "./IRIS_metadata.txt"
+masterDict["metadata_file"] = "./EarthScope_metadata.txt"
 
 databaseDir = "./db/"
 databaseName = "quargTickets.db"
