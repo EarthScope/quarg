@@ -151,8 +151,11 @@ def do_threshold(
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch2)]
 
+            numeric_cols = tmpDF.select_dtypes(include="number").columns
             horzAvg = (
-                tmpDF.groupby(["snl", "start"], as_index=False).mean().reset_index()
+                tmpDF.groupby(["snl", "start"], as_index=False)[numeric_cols]
+                .mean()
+                .reset_index()
             )
 
             for col in horzAvg.columns:
@@ -195,7 +198,8 @@ def do_threshold(
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
-            horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
+            numeric_cols = tmpDF.select_dtypes(include="number").columns
+            horzAvg = tmpDF.groupby(["snl", "start"])[numeric_cols].reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
@@ -237,7 +241,8 @@ def do_threshold(
 
             tmpDF = dfToUse[dfToUse["channel"].str.endswith(ch1)]
 
-            horzAvg = tmpDF.groupby(["snl", "start"]).mean().reset_index()
+            numeric_cols = tmpDF.select_dtypes(include="number").columns
+            horzAvg = tmpDF.groupby(["snl", "start"])[numeric_cols].mean().reset_index()
             for col in horzAvg.columns:
                 if col in columnsToNotChange:
                     continue
