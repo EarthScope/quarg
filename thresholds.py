@@ -170,17 +170,19 @@ def do_threshold(
                 splitTarget = row["target"].split(".")
                 thisSNL = row["snl"]
                 ch2ThisSNL = "".join(
-                    [
-                        i
-                        for i in list(
-                            set(
-                                dfToUse[dfToUse["snl"] == thisSNL]
-                                .channel.str.strip()
-                                .str[-1]
+                    sorted(
+                        [
+                            i
+                            for i in list(
+                                set(
+                                    dfToUse[dfToUse["snl"] == thisSNL]
+                                    .channel.str.strip()
+                                    .str[-1]
+                                )
                             )
-                        )
-                        if i in ch2
-                    ]
+                            if i in ch2
+                        ]
+                    )
                 )
                 newChannel = "%s/[%s]" % (splitTarget[3], ch2ThisSNL)
                 splitTarget[3] = newChannel
