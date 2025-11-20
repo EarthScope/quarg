@@ -75,10 +75,8 @@ def calculate_dates(reportFrequency):
         subdir = "%s" % startday.strftime("%Y%m")
 
     else:
-        #         print('Report frequency not recognized')
         return "", "", ""
 
-    # month = '%s' % startday.strftime('%Y%m')
     startday = startday.strftime("%Y-%m-%d")
     endday = endday.strftime("%Y-%m-%d")
 
@@ -191,10 +189,6 @@ def getArgs():
     )
 
     args = parser.parse_args(sys.argv[1:])
-    #     try:
-    #         args.month = args.start.split('-')[0] + args.start.split('-')[1]
-    #     except:
-    #         args.month = ''
 
     return args
 
@@ -248,13 +242,6 @@ def getMetrics(
                     metric=metric,
                     failedMetrics=failedMetrics,
                 )
-                # print(
-                #     "Unable to get metrics for %s - %s" % (metric, response.status_code)
-                # )
-                # if not metric in failedMetrics:
-                #     failedMetrics.append(metric)
-                # DF = pd.DataFrame()
-                # return DF, failedMetrics
             else:
                 DF = pd.read_csv(StringIO(response.text), header=1)
 
@@ -291,7 +278,6 @@ def getMetrics(
                         channel = channel.replace("?", "_").replace("*", "%")
 
                         # Include a wildcard for the quality code at this point
-                        #                        thisTarget = "%s\.%s\..*%s.*\..*%s.*\..*" % (net2, sta2, loc2, cha2)
                         targetList.append(
                             network
                             + "."
@@ -302,7 +288,6 @@ def getMetrics(
                             + channel
                             + "%.%"
                         )
-        #                        targetList.append("%s.%s.%s.%s._" % (network, station, location, channel))
 
         targets = "' or target like '".join(targetList)
 
@@ -400,11 +385,6 @@ def mergeMetricDF(nets, stas, locs, chans, start, end, metrics, metricSource):
                 )
                 quit()
 
-    #     # If any metrics didn't return any results, add them to the DF as NaNs
-    #     for metric_part in emptyMets:
-    #         if not DF.empty:
-    #             DF[metric_part] = np.nan
-
     # Add a channel column so that it's easier to divide the thresholds
     if DF.empty:
         return DF, failedMetrics
@@ -414,7 +394,6 @@ def mergeMetricDF(nets, stas, locs, chans, start, end, metrics, metricSource):
         DF["location"] = pd.DataFrame([x.split(".")[2] for x in DF["target"].tolist()])
         DF["channel"] = pd.DataFrame([x.split(".")[3] for x in DF["target"].tolist()])
 
-        #         print(DF)
         return DF, failedMetrics
 
 
@@ -488,25 +467,18 @@ def parse_XML(xml_file, df_cols):
                                 if field in df_cols:
                                     if field == "Latitude":
                                         thisLatitude = fieldNode.text
-                                    #                                         print(thisLatitude)
                                     if field == "Longitude":
                                         thisLongitude = fieldNode.text
-                                    #                                         print(thisLongitude)
                                     if field == "Elevation":
                                         thisElevation = fieldNode.text
-                                    #                                         print(thisElevation)
                                     if field == "Depth":
                                         thisDepth = fieldNode.text
-                                    #                                         print(thisDepth)
                                     if field == "Azimuth":
                                         thisAzimuth = fieldNode.text
-                                    #                                         print(thisAzimuth)
                                     if field == "Dip":
                                         thisDip = fieldNode.text
-                                    #                                         print(thisDip)
                                     if field == "SampleRate":
                                         thisSampleRate = fieldNode.text
-                                #                                         print(thisSampleRate)
 
                                 if field == "Response":
                                     for subFieldNode in fieldNode:
@@ -544,7 +516,6 @@ def parse_XML(xml_file, df_cols):
                                                             thisScaleUnits = (
                                                                 unitNode.text
                                                             )
-                            #                                                             print(thisScaleUnits)
                             rows.append(
                                 [
                                     thisNetwork,
@@ -566,8 +537,6 @@ def parse_XML(xml_file, df_cols):
                                 ]
                             )
     out_df = pd.DataFrame(rows, columns=df_cols)
-    #     out_df['EndTime']= pd.to_datetime(out_df['EndTime'])
-    #     out_df['StartTime']= pd.to_datetime(out_df['StartTime'])
     for column in [
         "Latitude",
         "Longitude",
@@ -720,8 +689,6 @@ def sortIssueFile(issueDF, threshold, itype):
             ]
 
     else:
-
-        #         printDF = pd.DataFrame(columns=['#Threshold','Target','Start','End','Ndays','Status','Notes'])
 
         for sncl in sorted(issueDF.target.unique()):
 
