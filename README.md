@@ -97,16 +97,18 @@ Instructions for Linux or macOS (Intel chip)
 ```
 cd quarg
 conda update conda
-conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+conda create --name quarg -c conda-forge  python=3.12
 conda activate quarg
+conda install -c conda-forge --file quarg-conda-install.txt
 ```
 
 Instructions for macOS (Apple M1 or M2 chip):
 ```
 cd quarg
 conda update conda
-CONDA_SUBDIR=osx-64 conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+CONDA_SUBDIR=osx-64 conda create --name quarg -c conda-forge  python=3.12
 conda activate quarg
+CONDA_SUBDIR=osx-64 conda install -c conda-forge --file quarg-conda-install.txt
 ```
 
 See what is installed in our (quarg) environment with:
