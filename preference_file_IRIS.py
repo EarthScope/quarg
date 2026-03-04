@@ -29,7 +29,7 @@ station = '*'
 location = '*'
 channels = 'BH?,HH?'
 
-instruments = ['strongmotion', 'short period', 'broadband']
+instruments = ['short period', 'broadband', 'strongmotion']
 chanTypes = {'H': ('1', '2', 'E', 'N'), 'V': ('3', 'Z')}
 
 
@@ -37,12 +37,12 @@ chanTypes = {'H': ('1', '2', 'E', 'N'), 'V': ('3', 'Z')}
 reportFrequency = 'Weekly'
 [startday, endday, subdir] = reportUtils.calculate_dates(reportFrequency)    # Determines default start and end dates, directory for report
 
-# Metric source: either 'IRIS' or the path to the local sqlite database file that ISPAQ generated
-metricSource = 'IRIS'
-metadataSource = 'IRIS'
+# Metric source: either 'EarthScope' or the path to the local sqlite database file that ISPAQ generated
+metricSource = 'EarthScope'
+metadataSource = 'EarthScope'
 
 ## Thresholds:
-thresholdGroups = ['Completeness', 'State of Health', 'Metadata', 'Amplitudes', 'Timing']
+thresholdGroups = ['Metadata', 'Timing', 'State of Health', 'Amplitudes', 'Completeness']
 
 groupsDict = {'Amplitudes': ['avgSpikes', 'badResp', 'badResp2', 'dcOffsets', 'dead', 'flat', 'gainRatio', 'gainRatioB', 'hiAmp', 'lowAmp', 'lowRms', 'medianUnique', 'nSpikes', 'noise1', 'noise2', 'nonCoher', 'pegged', 'polarity', 'rmsRatio', 'rmsRatio_horiz', 'xTalk'], 'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ'], 'State of Health': ['ampSat', 'clip', 'filtChg', 'glitch', 'padding', 'spikes', 'tSync'], 'Timing': ['noTime', 'poorTQual', 'suspectTime']}
 
