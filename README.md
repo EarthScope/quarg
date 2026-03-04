@@ -102,7 +102,7 @@ conda activate quarg
 conda install -c conda-forge --file quarg-conda-install.txt
 ```
 
-Instructions for macOS (Apple M1 or M2 chip):
+Instructions for macOS (Apple M-series chips, e.g., M1 - M5):
 ```
 cd quarg
 conda update conda
