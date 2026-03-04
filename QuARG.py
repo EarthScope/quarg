@@ -2629,7 +2629,7 @@ class ThresholdsScreen(Screen):
         ## Metric names
         # Try to get a list of metrics from service.earthscope.org, but if fails
         # then just use the old list.
-        URL = "http://service.earthscope.org/mustang/metrics/1/query?output=xml&nodata=404"
+        URL = "https://service.earthscope.org/mustang/metrics/1/query?output=xml&nodata=404"
 
         try:
             metrics = list()
@@ -2644,7 +2644,7 @@ class ThresholdsScreen(Screen):
                             today = datetime.datetime.now()
                             yesterday = today - datetime.timedelta(days=1)
                             subURL = (
-                                "http://service.earthscope.org/mustang/measurements/1/query?metric=transfer_function&format=text&timewindow=%s,%s&nodata=404"
+                                "https://service.earthscope.org/mustang/measurements/1/query?metric=transfer_function&format=text&timewindow=%s,%s&nodata=404"
                                 % (
                                     yesterday.strftime("%Y-%m-%d"),
                                     today.strftime("%Y-%m-%d"),
@@ -2683,7 +2683,7 @@ class ThresholdsScreen(Screen):
             print("ERROR: %s" % e)
 
         ## Do the same for the metadata fields
-        URL = "http://service.earthscope.org/fdsnws/station/1/query?net=IU&sta=ANMO&loc=00&cha=BHZ&level=channel&format=text&includecomments=true&nodata=404"
+        URL = "https://service.earthscope.org/fdsnws/station/1/query?net=IU&sta=ANMO&loc=00&cha=BHZ&level=channel&format=text&includecomments=true&nodata=404"
 
         try:
             metadata = pd.read_csv(URL, nrows=1, sep="|").columns
@@ -4305,7 +4305,7 @@ class ExamineIssuesScreen(Screen):
             os.mkdir(image_dir)
 
         # Grab all of the pngs and save in the directory
-        imageURL = "http://service.earthscope.org/irisws/timeseries/1/query?"
+        imageURL = "https://service.earthscope.org/irisws/timeseries/1/query?"
 
         if len(self.startday.split("T")) == 1:
             starttime = self.startday + "T00:00:00"
@@ -4389,7 +4389,7 @@ class ExamineIssuesScreen(Screen):
             return
 
         metricURL = (
-            "http://service.earthscope.org/mustang/measurements/1/query?metric="
+            "https://service.earthscope.org/mustang/measurements/1/query?metric="
             + self.metrics
         )
 
@@ -4457,7 +4457,7 @@ class ExamineIssuesScreen(Screen):
                     + ".png"
                 )
                 metricURL = (
-                    "http://service.earthscope.org/mustang/measurements/1/query?metric="
+                    "https://service.earthscope.org/mustang/measurements/1/query?metric="
                     + metric
                 )
 
@@ -4597,7 +4597,7 @@ class ExamineIssuesScreen(Screen):
 
     def see_pdfs(self):
         self.get_examine_inputs()
-        pdfURL = "http://service.earthscope.org/mustang/noise-pdf-browser/1/gallery?"
+        pdfURL = "https://service.earthscope.org/mustang/noise-pdf-browser/1/gallery?"
 
         if self.network == "":
             self.warning_popup("WARNING: Network field required")
@@ -4629,7 +4629,7 @@ class ExamineIssuesScreen(Screen):
             return
 
         spectURL = (
-            "http://service.earthscope.org/mustang/noise-pdf-browser/1/spectrogram?"
+            "https://service.earthscope.org/mustang/noise-pdf-browser/1/spectrogram?"
         )
 
         if self.network:
@@ -4676,7 +4676,7 @@ class ExamineIssuesScreen(Screen):
             return
 
         nmtURL = (
-            "http://service.earthscope.org/mustang/noise-mode-timeseries/1/query?net="
+            "https://service.earthscope.org/mustang/noise-mode-timeseries/1/query?net="
             + self.network
             + "&sta="
             + self.station
@@ -4788,7 +4788,7 @@ class ExamineIssuesScreen(Screen):
             self.warning_popup("WARNING: Network field required")
             return
 
-        stationURL = "http://service.earthscope.org/fdsnws/station/1/query?"
+        stationURL = "https://service.earthscope.org/fdsnws/station/1/query?"
 
         if self.network:
             stationURL = stationURL + "net=" + self.network

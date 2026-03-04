@@ -366,7 +366,7 @@ def closeHTML():
         f.write("\t    </p>\n\n")
 
         f.write(
-            '\t    <p><a href="http://service.earthscope.org/mustang/measurements/1">MUSTANG measurement service metrics:</a>\n'
+            '\t    <p><a href="https://service.earthscope.org/mustang/measurements/1">MUSTANG measurement service metrics:</a>\n'
         )
         f.write("\t    <table>\n")
         f.write("\t        <tr>\n")
@@ -384,13 +384,13 @@ def closeHTML():
         f.write("\t    </p>\n")
 
         f.write(
-            '\t    <p><a href="http://service.earthscope.org/mustang/noise-psd/1" target="_blank" >MUSTANG noise-psd service</a></p>\n'
+            '\t    <p><a href="https://service.earthscope.org/mustang/noise-psd/1" target="_blank" >MUSTANG noise-psd service</a></p>\n'
         )
         f.write(
-            '\t    <p><a href="http://service.earthscope.org/mustang/noise-pdf/1" target="_blank">MUSTANG noise-pdf service</a></p>\n'
+            '\t    <p><a href="https://service.earthscope.org/mustang/noise-pdf/1" target="_blank">MUSTANG noise-pdf service</a></p>\n'
         )
         f.write(
-            '\t    <p><a href="http://service.earthscope.org/mustang/noise-mode-timeseries/1" target="_blank">MUSTANG noise-mode-timeseries service</a></p>\n'
+            '\t    <p><a href="https://service.earthscope.org/mustang/noise-mode-timeseries/1" target="_blank">MUSTANG noise-mode-timeseries service</a></p>\n'
         )
         f.write(
             '\t    <p><a href="http://ds.iris.edu/data_available/" target="_blank">GOAT/data_available</a></p>\n'

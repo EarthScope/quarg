@@ -216,7 +216,7 @@ def getMetrics(
     if metricSource.upper() == "EARTHSCOPE":
 
         URL = (
-            "http://service.earthscope.org/mustang/measurements/1/query?metric="
+            "https://service.earthscope.org/mustang/measurements/1/query?metric="
             + metric
             + "&net="
             + nets
@@ -578,7 +578,7 @@ def getMetadata(nets, stas, locs, chans, start, end, metadataSource):
     # TODO: change it so that it only looks for current metadata epochs?
     if metadataSource.upper() == "EARTHSCOPE":
         URL = (
-            "http://service.earthscope.org/fdsnws/station/1/query?net="
+            "https://service.earthscope.org/fdsnws/station/1/query?net="
             + nets
             + "&sta="
             + stas

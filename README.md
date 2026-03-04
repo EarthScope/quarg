@@ -4,7 +4,7 @@
 For detailed documentation, check out [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)  
 <br />
 
-**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize EarthScope’s database of [MUSTANG](http://service.earthscope.org/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
+**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize EarthScope’s database of [MUSTANG](https://service.earthscope.org/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
 
 Over the years that IRIS produced Quality Assurance Reports, we refined the process of generating a report into four primary steps:
 
