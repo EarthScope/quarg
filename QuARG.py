@@ -1374,7 +1374,7 @@ Each of those tabs corresponds to a step in the process of creating your Quality
             helpText = """FIND ISSUES
 
   1. Navigate to and select your Preference File using the Browse button - an example file 
-      preference_file_IRIS.py is provided in the base quarg/ directory
+      preference_file_EarthScope.py is provided in the base quarg/ directory
   2. Autofill the remaining fields from the Preference File
   3. Change any of the fields, if necessary - QuARG will use the values in the form over those in 
       the Preference File. If you change the Directory field, use the Apply Changes button to propagate

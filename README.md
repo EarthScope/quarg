@@ -21,7 +21,7 @@ Users have the ability to customize QuARG to adapt to their particular network. 
 * Add, edit, or remove Thresholds based on what best fits the network instrumentation.
 * Group instrumentation by Network, Station, Locations, or Channels, defining thresholds individually for each group. 
 * Use metric values sourced from either EarthScope or a local ISPAQ database. Similarly, locally-sourced or EarthScope-provided metadata.
-* Create preference files to minimize the number of fields that users need to input, easily track what thresholds were used to find issues, and potentially create a series of files to be utilized for different use-cases within a network.  An example file preference_file_IRIS.py is provided in the base quarg directory. 
+* Create preference files to minimize the number of fields that users need to input, easily track what thresholds were used to find issues, and potentially create a series of files to be utilized for different use-cases within a network.  An example file preference_file_EarthScope.py is provided in the base quarg directory. 
 * Use the built-in ticketing system or an external one, whichever works better for your workflow. 
 
 This utility guides users through the process of generating a list of potential issues, examining and tracking issues, and generating a report.  
