@@ -1702,8 +1702,16 @@ class PreferencesScreen(Screen):
                 masterDict["preference_station"] = local_dict["station"]
                 masterDict["preference_channels"] = local_dict["channels"]
                 masterDict["preference_location"] = local_dict["location"]
-                masterDict["preference_metricSource"] = local_dict["metricSource"]
-                masterDict["preference_metadataSource"] = local_dict["metadataSource"]
+                masterDict["preference_metricSource"] = (
+                    "EarthScope"
+                    if local_dict["metricSource"] == "IRIS"
+                    else local_dict["metricSource"]
+                )
+                masterDict["preference_metadataSource"] = (
+                    "EarthScope"
+                    if local_dict["metadataSource"] == "IRIS"
+                    else local_dict["metadataSource"]
+                )
                 masterDict["preference_issueFile"] = local_dict["filename"]
                 masterDict["preference_ticketFile"] = local_dict["csvfilename"]
                 masterDict["preference_author"] = local_dict["author"]

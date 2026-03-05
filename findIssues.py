@@ -124,6 +124,11 @@ else:
     print("WARNING: No threshold file provided. Exiting.")
     quit()
 
+# Allow for backward compatibility in preference file
+if metricSource == "IRIS":
+    metricSource = "EarthScope"
+if metadataSource == "IRIS":
+    metadataSource = "EarthScope"
 
 directory = os.path.dirname(outfile)
 
