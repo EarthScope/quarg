@@ -392,9 +392,7 @@ def closeHTML():
         f.write(
             '\t    <p><a href="https://service.earthscope.org/mustang/noise-mode-timeseries/1" target="_blank">MUSTANG noise-mode-timeseries service</a></p>\n'
         )
-        f.write(
-            '\t    <p><a href="http://ds.iris.edu/data_available/" target="_blank">GOAT/data_available</a></p>\n'
-        )
+
         for net in network.split(","):
             net = net.strip()
             f.write(
@@ -403,9 +401,6 @@ def closeHTML():
             )
         f.write(
             '\t    <p><a href="http://ds.iris.edu/servlet/budstat/topLevel.do?source=BUD" target="_blank">BUD stats</a></p>\n'
-        )
-        f.write(
-            '\t    <p><a href="http://ds.iris.edu//SeismiQuery/index.html" target="_blank">SeismiQuery</a></p>\n'
         )
 
         # Loop over the thresholds dictionary to print the definitions for instrument groups that are being used.
