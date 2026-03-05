@@ -4580,20 +4580,25 @@ class ExamineIssuesScreen(Screen):
                         ax.yaxis.grid(True, linestyle="--")
 
                 fig = axes[-1].get_figure()
-                ax.set_xlim([datelist[0] - 1, datelist[-1] + 1])
+                ax.set_xlim(
+                    [
+                        datelist[0] - (1 * datelist.freq),
+                        datelist[-1],
+                    ]
+                )
                 ax = fig.add_subplot(111, frameon=False)
                 plt.tick_params(
                     labelcolor="none", top=False, bottom=False, left=False, right=False
                 )
                 ax.set_ylabel(metric, labelpad=20)
-                plt.tight_layout(1, 0.5, 0.5)
+                plt.tight_layout()
 
                 plt.savefig(masterDict["plot_filename"])
                 plt.close()
                 subprocess.run(["open", masterDict["plot_filename"]], check=True)
 
-        except:
-            print("Error producing plot.")
+        except Exception as e:
+            print(f"Error producing plot: {e}")
 
     def see_pdfs(self):
         self.get_examine_inputs()
