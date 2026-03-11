@@ -55,8 +55,7 @@
     
 <CustImage@Image>:
     size: self.texture_size
-    allow_stretch: True
-    keep_ratio: True
+    fit_mode: 'contain'
     size_hint_y: None
     size_hint_x: None
     width: self.parent.width
@@ -2064,13 +2063,13 @@
 										    on_select: metric_source_btn.text = args[1]
 										
 										    Button:
-										        text: 'IRIS'
+										        text: 'EarthScope'
 										        size_hint_y: None
 										        height: '35dp'
 										        #background_color: .5,.5,.5,1
 										        #background_normal: ''
 										        on_release: 
-										        	metric_source_dropdown.select('IRIS')
+										        	metric_source_dropdown.select('EarthScope')
 										        	root.deactivate_metric_source_text()
 										
 										    Button:
@@ -2125,13 +2124,13 @@
 										    on_select: metadata_source_btn.text = args[1]
 										
 										    Button:
-										        text: 'IRIS'
+										        text: 'EarthScope'
 										        size_hint_y: None
 										        height: '35dp'
 										        #background_color: .5,.5,.5,1
 										        #background_normal: ''
 										        on_release: 
-										        	metadata_source_dropdown.select('IRIS')
+										        	metadata_source_dropdown.select('EarthScope')
 										        	root.deactivate_metadata_source_text()
 										
 										    Button:

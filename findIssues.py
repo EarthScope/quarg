@@ -27,15 +27,20 @@ import os
 import pandas as pd
 
 
-
 # TODO: If ts_ metrics are used, must propagate through into the thresholds file
 
 # ============================#
 # LOAD INPUT ARGUMENTS
-network = ''; station = ''; location = ''; channels =  ''; start = '';end = ''; outfile = ''
+network = ""
+station = ""
+location = ""
+channels = ""
+start = ""
+end = ""
+outfile = ""
 
 args = reportUtils.getArgs()
-start= args.start
+start = args.start
 end = args.end
 # month = args.month
 
@@ -43,26 +48,57 @@ preferenceFile = args.preference_file
 
 if not preferenceFile:
     # If no preference file included, run everything
-    thresholdGroups = ['Completeness','Amplitudes','Timing','State of Health','Metadata']
-    groupsDict = {'Completeness':['avgGaps','gapsRatioGt12','noData'],
-                  'Amplitudes' : ['flat','lowRms','hiAmp','lowAmp','badResp',
-                                  'avgSpikes','pegged','dead','noise1','noise2',
-                                  'medianUnique','rmsRatio','xTalk',
-                                  'gainRatio','nonCoher','polarity',
-                                  'dcOffsets','nSpikes','rmsRatio'],
-                  'Timing' : ['poorTQual','suspectTime','noTime'],
-                  'State of Health' : ['ampSat','filtChg','clip',
-                                       'spikes','glitch','padding','tSync'],
-                  'Metadata' : ['zDip','horDip','zeroZ','lowScale','nonMSUnits']}
-    
+    thresholdGroups = [
+        "Completeness",
+        "Amplitudes",
+        "Timing",
+        "State of Health",
+        "Metadata",
+    ]
+    groupsDict = {
+        "Completeness": ["avgGaps", "gapsRatioGt12", "noData"],
+        "Amplitudes": [
+            "flat",
+            "lowRms",
+            "hiAmp",
+            "lowAmp",
+            "badResp",
+            "avgSpikes",
+            "pegged",
+            "dead",
+            "noise1",
+            "noise2",
+            "medianUnique",
+            "rmsRatio",
+            "xTalk",
+            "gainRatio",
+            "nonCoher",
+            "polarity",
+            "dcOffsets",
+            "nSpikes",
+            "rmsRatio",
+        ],
+        "Timing": ["poorTQual", "suspectTime", "noTime"],
+        "State of Health": [
+            "ampSat",
+            "filtChg",
+            "clip",
+            "spikes",
+            "glitch",
+            "padding",
+            "tSync",
+        ],
+        "Metadata": ["zDip", "horDip", "zeroZ", "lowScale", "nonMSUnits"],
+    }
+
 else:
     try:
         with open(preferenceFile) as f:
             exec(compile(f.read(), preferenceFile, "exec"))
     except OSError:
-        print('Cannot open', preferenceFile)
+        print("Cannot open", preferenceFile)
         quit()
-        
+
 # Commandline arguments override preference file values, if provided
 if args.network:
     network = args.network
@@ -71,7 +107,7 @@ if args.stations:
 if args.locations:
     location = args.locations
 if args.channels:
-    channels=  args.channels
+    channels = args.channels
 if args.outfile:
     outfile = args.outfile
 if args.metricsource:
@@ -88,6 +124,11 @@ else:
     print("WARNING: No threshold file provided. Exiting.")
     quit()
 
+# Allow for backward compatibility in preference file
+if metricSource == "IRIS":
+    metricSource = "EarthScope"
+if metadataSource == "IRIS":
+    metadataSource = "EarthScope"
 
 directory = os.path.dirname(outfile)
 
@@ -102,53 +143,64 @@ if not os.path.exists(directory):
 
 if os.path.isfile(outfile):
     resp1 = input("This file already exists - overwrite?[y/n]:  ")
-    if (resp1.upper() == 'Y') or (resp1.upper() == 'YES'):
-        print('Removing existing file')
+    if (resp1.upper() == "Y") or (resp1.upper() == "YES"):
+        print("Removing existing file")
         os.remove(outfile)
-        
-    elif (resp1.upper() == 'N') or (resp1.upper()== 'NO'):
-        resp2= input('Should I append to the existing file?[y/n]: ')
-        if (not resp2.upper() == 'Y') and (not resp2.upper() == 'YES'):
+
+    elif (resp1.upper() == "N") or (resp1.upper() == "NO"):
+        resp2 = input("Should I append to the existing file?[y/n]: ")
+        if (not resp2.upper() == "Y") and (not resp2.upper() == "YES"):
             quit("Exiting")
     else:
-        print('Input not recognized, cancelling')
+        print("Input not recognized, cancelling")
         quit()
-    
+
 # Load up list of metrics and metadata, for reference later on
 if os.path.isfile(metrics_file):
-    with open(metrics_file,'r') as f:
+    with open(metrics_file, "r") as f:
         metricsList = f.read().splitlines()
 else:
     # This should not happen unless running outside of QuARG since QuARG.py has a check before running findIssues.py
-    print("WARNING: Could not find list of MUSTANG metrics in file %s - does it exist?" % metrics_file)
-    print("         You can create this list by entering the Thresholds Editor - it will automatically generate there")
+    print(
+        "WARNING: Could not find list of MUSTANG metrics in file %s - does it exist?"
+        % metrics_file
+    )
+    print(
+        "         You can create this list by entering the Thresholds Editor - it will automatically generate there"
+    )
     quit()
-  
+
 if os.path.isfile(metadata_file):
-    with open(metadata_file,'r') as f:
+    with open(metadata_file, "r") as f:
         metadataList = f.read().splitlines()
 else:
     # This should not happen unless running outside of QuARG since QuARG.py has a check before running findIssues.py
-    print("WARNING: Could not find list of IRIS metadata fields in file %s - does it exist?" % metadata_file)
-    print("         You can create this list by entering the Thresholds Editor - it will automatically generate there")
+    print(
+        "WARNING: Could not find list of EarthScope metadata fields in file %s - does it exist?"
+        % metadata_file
+    )
+    print(
+        "         You can create this list by entering the Thresholds Editor - it will automatically generate there"
+    )
     quit()
-             
+
 
 # ============================#
 # GO THROUGH THRESHOLDS
 
 # Add the header to the file
-with open(outfile, 'w') as f:
+with open(outfile, "w") as f:
     f.write("# Threshold|Target|Start|End|Ndays|Status|Value|Notes\n")
-f.close() 
+f.close()
 
 # Get metadata dataframe at the beginning to use wherever necessary, since it is always the same
-metadataDF = reportUtils.getMetadata(network, station, location, channels, start, end, metadataSource)
+metadataDF = reportUtils.getMetadata(
+    network, station, location, channels, start, end, metadataSource
+)
 
 
 failedMetricsAll = list()
 failedThresholdsAll = list()
-# thresholdFile = './groupsTEST.txt'
 for thresholdGroup in thresholdGroups:
     print()
     print("Running %s Thresholds" % thresholdGroup)
@@ -157,46 +209,65 @@ for thresholdGroup in thresholdGroups:
     except:
         print("   Could not find any thresholds for %s" % thresholdGroup)
         continue
-    
+
     thresholdsList.sort()
-    
-    allMetrics, failedThresholds = thresholds.get_threshold_metrics(thresholdsList, thresholdFile)
+
+    allMetrics, failedThresholds = thresholds.get_threshold_metrics(
+        thresholdsList, thresholdFile
+    )
     metadatas = [e for e in metadataList if e in allMetrics]
     metrics = [e for e in metricsList if e in allMetrics]
 
-#     hasMetadata = False; 
     hasMetrics = False
-#     if len(metadatas) > 0:
-#         print("This thresholds Group contains some metadata fields")
-#         hasMetadata = True
     if len(metrics) > 0:
         hasMetrics = True
 
-    
     if hasMetrics:
-        metricDF, failedMetrics = reportUtils.mergeMetricDF(network, station, location, channels, start, end, metrics, metricSource)
+        metricDF, failedMetrics = reportUtils.mergeMetricDF(
+            network, station, location, channels, start, end, metrics, metricSource
+        )
     else:
-        metricDF = pd.DataFrame(columns=['value','target','start','end','network','station','location','channel'])
+        metricDF = pd.DataFrame(
+            columns=[
+                "value",
+                "target",
+                "start",
+                "end",
+                "network",
+                "station",
+                "location",
+                "channel",
+            ]
+        )
         failedMetrics = list()
-    
+
     for failedThreshold in failedThresholds:
         if not failedThreshold in failedThresholdsAll:
             failedThresholdsAll.append(failedThreshold)
-    
+
     for failedMetric in failedMetrics:
         if not failedMetric in failedMetricsAll:
             failedMetricsAll.append(failedMetric)
-    
-#     if hasMetrics == True and  not metricDF.empty:
+
     for threshold in thresholdsList:
         if not threshold in failedThresholds:
-            thresholds.do_threshold(threshold, thresholdFile, metricDF, metadataDF, outfile, instruments, start, end, hasMetrics, chanTypes)
+            thresholds.do_threshold(
+                threshold,
+                thresholdFile,
+                metricDF,
+                metadataDF,
+                outfile,
+                instruments,
+                start,
+                end,
+                hasMetrics,
+                chanTypes,
+            )
 
-with open('failedMetrics.txt','w') as f:
+with open("failedMetrics.txt", "w") as f:
     for failedThreshold in failedThresholdsAll:
-        f.write('threshold: %s\n' % failedThreshold)
+        f.write("threshold: %s\n" % failedThreshold)
     for failedMetric in failedMetricsAll:
-        f.write('metric: %s\n' % failedMetric)
+        f.write("metric: %s\n" % failedMetric)
 
 print("INFO: Completed generating issue file")
-

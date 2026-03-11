@@ -1,10 +1,10 @@
 # QuARG
 
-#### Questions or comments can be directed to the EarthScope (formerly IRIS) Quality Assurance Group at <a href="mailto:data-help@earthscope.org">data-help@earthscope.org</a>.
+#### Questions or comments can be directed to the EarthScope (formerly IRIS) Quality Assurance Group at <a href="mailto:help@earthscope.org">help@earthscope.org</a>.
 For detailed documentation, check out [EarthScope.github.io/quarg/](https://EarthScope.github.io/quarg/DOCUMENTATION.html)  
 <br />
 
-**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize EarthScope’s database of [MUSTANG](http://service.iris.edu/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
+**QuARG**, the Quality Assurance Report Generator, is a Python client that allows network operators to generate quality assurance (QA) reports from start to finish. These reports utilize EarthScope’s database of [MUSTANG](https://service.earthscope.org/mustang/) data quality metrics to find and highlight potential issues in the data, reducing the amount of time that analysts need to spend scanning the data for problems. 
 
 Over the years that IRIS produced Quality Assurance Reports, we refined the process of generating a report into four primary steps:
 
@@ -21,7 +21,7 @@ Users have the ability to customize QuARG to adapt to their particular network. 
 * Add, edit, or remove Thresholds based on what best fits the network instrumentation.
 * Group instrumentation by Network, Station, Locations, or Channels, defining thresholds individually for each group. 
 * Use metric values sourced from either EarthScope or a local ISPAQ database. Similarly, locally-sourced or EarthScope-provided metadata.
-* Create preference files to minimize the number of fields that users need to input, easily track what thresholds were used to find issues, and potentially create a series of files to be utilized for different use-cases within a network.  An example file preference_file_IRIS.py is provided in the base quarg directory. 
+* Create preference files to minimize the number of fields that users need to input, easily track what thresholds were used to find issues, and potentially create a series of files to be utilized for different use-cases within a network.  An example file preference_file_EarthScope.py is provided in the base quarg directory. 
 * Use the built-in ticketing system or an external one, whichever works better for your workflow. 
 
 This utility guides users through the process of generating a list of potential issues, examining and tracking issues, and generating a report.  
@@ -97,16 +97,18 @@ Instructions for Linux or macOS (Intel chip)
 ```
 cd quarg
 conda update conda
-conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+conda create --name quarg -c conda-forge  python=3.12
 conda activate quarg
+conda install -c conda-forge --file quarg-conda-install.txt
 ```
 
-Instructions for macOS (Apple M1 or M2 chip):
+Instructions for macOS (Apple M-series chips, e.g., M1 - M5):
 ```
 cd quarg
 conda update conda
-CONDA_SUBDIR=osx-64 conda create --name quarg -c conda-forge --file quarg-conda-install.txt
+CONDA_SUBDIR=osx-64 conda create --name quarg -c conda-forge  python=3.12
 conda activate quarg
+CONDA_SUBDIR=osx-64 conda install -c conda-forge --file quarg-conda-install.txt
 ```
 
 See what is installed in our (quarg) environment with:

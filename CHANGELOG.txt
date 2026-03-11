@@ -1,3 +1,8 @@
+Version 1.2.0
+- Updated to use python 3.12
+- Updated dependency versions, requiring the retirement of deprecated methods used internally. 
+- Converted remaining references of "IRIS" to "EarthScope". Use of "IRIS" in the preference file will continue to work, but suggest updating to "EarthScope"
+
 Version 1.1.1
 - Update to use python 3.6.15
 
