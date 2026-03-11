@@ -71,6 +71,11 @@ import datetime
 import shutil  # used to remove directories
 import webbrowser
 import pandas as pd
+
+import logging
+
+logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
